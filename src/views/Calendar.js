@@ -6,6 +6,11 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import styled from 'styled-components';
 
+const StyledCalendar = styled(Calendar)`
+  .rbc-event{
+    background: #232323;
+  }
+`;
 
 function CalendarView() {
   moment.locale('ko-KR')
@@ -13,14 +18,15 @@ function CalendarView() {
   return (
     <div className="gt-container">
       <Text text="고스트타운 입고 달력" fontSize="24px" fontWeight={700} />
-      <Calendar
+      <StyledCalendar
         localizer={localizer}
         events={[
           {
             title: "고스트타운 입고",
-            allDay: false,
-            start: new Date(2022, 2, 2, 10, 0), // 10.00 AM
-            end: new Date(2022, 2, 2, 14, 0) // 2.00 PM
+            // allDay: true,
+            start: new Date('2022-03-02'),
+            // start: new Date(2022, 2, 2), // 10.00 AM
+            end: new Date(2022, 2, 2) // 2.00 PM
           }
         ]}
         view="month"

@@ -68,6 +68,12 @@ function Shop() {
                     {item.size.map((item, idx) => (
                       <Button style={{ margin: 5 }} onClick={(e) => selectSize(e)} text={item} />
                     ))}
+                    {item.size == 0 && (
+                      <>
+                        <Text fontWeight={700} text="재고가 없습니다." />
+
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

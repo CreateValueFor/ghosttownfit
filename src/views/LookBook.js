@@ -18,8 +18,8 @@ function LookBook() {
 
   return (
     <StyledLookBook className="gt-container">
-      <Text text="Season 1" fontSize="24px" fontWeight={700} />
-      <ul style={{ padding: "15px" }}>
+      <Text className="gt-title" text="Season 1" fontSize="24px" fontWeight={700} />
+      <ul style={{ padding: "0px 15px 15px" }}>
         {LOOKBOOK.map((item, idx) => (
           <img key={idx} src={require(`../assets/images/lookbook/${item}`)} />
         ))}
