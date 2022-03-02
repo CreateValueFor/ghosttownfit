@@ -3,21 +3,29 @@ export const dummy = [
         img: 'https://ghosttown.kr/web/product/medium/202201/ab9a7a64ac7e059eadd6ce2024c40909.jpg',
         title: '고스트타운피트니스 GT 우레탄 전사 후막 맨투맨',
         price: '64800',
+        id: "1",
+        size: ["lg", "m"]
     },
     {
         img: 'https://ghosttown.kr/web/product/medium/202201/ab9a7a64ac7e059eadd6ce2024c40909.jpg',
         title: '고스트타운피트니스 GT 우레탄 전사 후막 맨투맨',
         price: '64800',
+        id: "2",
+        size: ["lg", "m"]
     },
     {
         img: 'https://ghosttown.kr/web/product/medium/202201/ab9a7a64ac7e059eadd6ce2024c40909.jpg',
         title: '고스트타운피트니스 GT 우레탄 전사 후막 맨투맨',
         price: '64800',
+        id: "3",
+        size: ["lg", "m"]
     },
     {
         img: 'https://ghosttown.kr/web/product/medium/202201/ab9a7a64ac7e059eadd6ce2024c40909.jpg',
         title: '고스트타운피트니스 GT 우레탄 전사 후막 맨투맨',
         price: '64800',
+        id: "4",
+        size: []
     },
 ]
 

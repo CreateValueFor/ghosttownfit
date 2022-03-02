@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Text from '../components/atom/Text'
 import Button from '../components/atom/Button'
 import { dummy } from '../dummy/product'
 import { StyledProduct, StyledRow } from '../components/molecule/Container'
+import { useNavigate } from 'react-router'
 
 const StyledShop = styled.div`
-  padding: 100px 28px;
+  /* padding: 100px 28px; */
   .product-class {
+    margin-bottom: 50px;
     ul {
       margin: 0 auto;
       max-width: 600px;
@@ -18,8 +20,19 @@ const StyledShop = styled.div`
 `
 
 function Shop() {
+  const navigator = useNavigate()
+  const [size, setSize] = useState(null);
+
+  const onProductClick = (id) => {
+    console.log(navigator(`/product/${id}`))
+  }
+
+  const selectSize = (e) => {
+    e.stopPropagation();
+  }
+
   return (
-    <StyledShop>
+    <StyledShop className="gt-container">
       <div className="product-class">
         <ul>
           <li>
@@ -40,18 +53,23 @@ function Shop() {
             lg={4}
             xl={3}
             style={{ marginBottom: 28, position: 'relative' }}
+            onClick={() => onProductClick(item.id)}
+            key={item.id}
           >
             <div className="product--image" style={{ position: 'relative' }}>
               <img style={{ width: '100%' }} src={item.img} alt="pic" />
               <div
-                className="product--buy"
+                className="product--buy-container"
                 style={{ position: 'absolute', bottom: 0 }}
               >
-                <div style={{ display: 'flex', marginBottom: 10 }}>
-                  <Button color="#232323" bgColor="#fff" text="lg" />
-                  <Button color="#232323" bgColor="#fff" text="m" />
+                <div className="product--buy">
+                  <Text text="바로담기" fontWeight={700} style={{ marginBottom: 15 }} />
+                  <div style={{ display: 'flex', marginBottom: 10, }}>
+                    {item.size.map((item, idx) => (
+                      <Button style={{ margin: 5 }} onClick={(e) => selectSize(e)} text={item} />
+                    ))}
+                  </div>
                 </div>
-                <Button text="장바구니 담기"></Button>
               </div>
             </div>
             <Text fontWeight={700} text={item.title} />
@@ -59,7 +77,7 @@ function Shop() {
           </StyledProduct>
         ))}
       </StyledRow>
-    </StyledShop>
+    </StyledShop >
   )
 }
 

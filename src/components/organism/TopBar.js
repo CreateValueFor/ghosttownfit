@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import logo from '../../assets/images/ghost-white.png'
 import blackLogo from "../../assets/images/gt-black.png"
 import Input from "../molecule/Search"
+import { useLocation } from 'react-router'
 
 const StyledTopBar = styled.div`
   height: 69px;
@@ -61,16 +62,33 @@ const StyledTopBar = styled.div`
 `
 
 function TopBar() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(true)
+  const path = useLocation().pathname
 
-  window.addEventListener('scroll', (e) => {
-
+  const scrollEvent = () => {
     if (window.scrollY === 0) {
       setIsScrolled(false)
     } else {
       setIsScrolled(true)
     }
-  })
+  }
+
+  useEffect(() => {
+
+    if (path === '/') {
+      setIsScrolled(false)
+    } else {
+      setIsScrolled(true)
+    }
+    if (path === '/') {
+      window.addEventListener('scroll', scrollEvent)
+    }
+    return window.removeEventListener('scroll', scrollEvent)
+
+  }, [path])
+
+
+
   return (
     <StyledTopBar isScrolled={isScrolled}>
       <div className="left-menu">

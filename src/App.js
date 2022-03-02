@@ -11,15 +11,17 @@ import Calendar from './views/Calendar';
 import Footer from './components/organism/Footer';
 import Login from './views/Login';
 import Product from './views/Product';
+import LookBook from './views/LookBook';
 
 function App() {
-  console.log('fck')
+
   return (
     <div className="App">
       <TopBar />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/lookbook" element={<LookBook />} />
         <Route path="/Calendar" element={<Calendar />} />
         <Route path="/partnership" element={<PartnerShip />} />
         <Route path="/news" element={<News />} />
