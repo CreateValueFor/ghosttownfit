@@ -32,6 +32,9 @@
   margin-top: 100px;
   padding: 50px;
 }
+.gt-title {
+  margin-bottom: 50px !important;
+}
 
 @keyframes App-logo-spin {
   from {
