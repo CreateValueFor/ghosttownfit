@@ -2,7 +2,8 @@ import axios from "axios"
 
 
 
-const BASE_URL = "http://13.125.119.128:8000/"
+// const BASE_URL = "http://13.125.119.128:8000/"
+const BASE_URL = "http://ghosttown.callenge.co.kr:8000/"
 
 const _baseGetRequest = async (path) => {
     const headers = {
