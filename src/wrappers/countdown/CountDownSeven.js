@@ -7,9 +7,8 @@ import Renderer from "../../components/countdown/Renderer";
 const CountDownSeven = ({ bgColorClass, spaceTopClass, dateTime }) => {
   return (
     <div
-      className={`black-friday-deal-area ${bgColorClass ? bgColorClass : ""} ${
-        spaceTopClass ? spaceTopClass : ""
-      }`}
+      className={`black-friday-deal-area ${bgColorClass ? bgColorClass : ""} ${spaceTopClass ? spaceTopClass : ""
+        }`}
     >
       <div className="container">
         <div className="black-friday-deal-content text-center">
@@ -18,7 +17,7 @@ const CountDownSeven = ({ bgColorClass, spaceTopClass, dateTime }) => {
             <Countdown date={new Date(dateTime)} renderer={Renderer} />
           </div>
           <div className="slider-btn-12 btn-hover">
-            <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+            <Link to={process.env.PUBLIC_URL + "/shop"}>
               MORE OFFER
             </Link>
           </div>

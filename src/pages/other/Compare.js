@@ -118,7 +118,7 @@ const Compare = ({
                                         }
                                         className={
                                           cartItem !== undefined &&
-                                          cartItem.quantity > 0
+                                            cartItem.quantity > 0
                                             ? "active"
                                             : ""
                                         }
@@ -133,7 +133,7 @@ const Compare = ({
                                         }
                                       >
                                         {cartItem !== undefined &&
-                                        cartItem.quantity > 0
+                                          cartItem.quantity > 0
                                           ? "Added"
                                           : "Add to cart"}
                                       </button>
@@ -224,7 +224,7 @@ const Compare = ({
                     </div>
                     <div className="item-empty-area__text">
                       No items found in compare <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                      <Link to={process.env.PUBLIC_URL + "/shop"}>
                         Add Items
                       </Link>
                     </div>

@@ -4,6 +4,7 @@ import axios from "axios"
 
 // const BASE_URL = "http://13.125.119.128:8000/"
 const BASE_URL = "http://ghosttown.callenge.co.kr:8000/"
+// export const BASE_URL = "http://localhost:8000/"
 
 const _baseGetRequest = async (path) => {
     const headers = {
@@ -70,3 +71,22 @@ export const getInquiry = async (page) => {
     return res.data
 }
 
+/**
+ * 입고일정 불러오기 - GET
+ * 
+ */
+
+export const getCalendar = async () => {
+
+    const res = await _baseGetRequest(`calendar`)
+    return res.data
+}
+
+/**
+ * 
+ * 제품 목록 불러오기 - GET
+ */
+export const getProducts = async () => {
+    const res = await _baseGetRequest('product/color')
+    return res.data;
+}

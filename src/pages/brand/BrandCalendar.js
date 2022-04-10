@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
 import LayoutOne from "../../layouts/LayoutOne";
 import HeroSliderOne from "../../wrappers/hero-slider/HeroSliderOne";
@@ -10,6 +10,8 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import styled from 'styled-components';
+import { getCalendar } from "../../api/api";
+
 
 
 
@@ -38,6 +40,14 @@ export default HomeFashion;
 
 
 function CalendarView() {
+
+    const [plans, setPlans] = useState([]);
+
+    useEffect(async () => {
+        const res = await getCalendar();
+        setPlans(res);
+    }, [])
+
     moment.locale('ko-KR')
     const localizer = momentLocalizer(moment)
     return (
@@ -45,15 +55,7 @@ function CalendarView() {
             <p text="고스트타운 입고 달력" fontSize="24px" fontWeight={700} />
             <StyledCalendar
                 localizer={localizer}
-                events={[
-                    {
-                        title: "고스트타운 입고",
-                        // allDay: true,
-                        start: new Date('2022-03-02'),
-                        // start: new Date(2022, 2, 2), // 10.00 AM
-                        end: new Date(2022, 2, 2) // 2.00 PM
-                    }
-                ]}
+                events={plans}
                 view="month"
                 views={["month"]}
                 components={{

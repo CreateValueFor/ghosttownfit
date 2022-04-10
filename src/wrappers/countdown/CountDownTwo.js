@@ -7,9 +7,8 @@ import Renderer from "../../components/countdown/Renderer";
 const CountDownTwo = ({ spaceTopClass, spaceBottomClass, dateTime }) => {
   return (
     <div
-      className={`funfact-area ${spaceTopClass ? spaceTopClass : ""} ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }`}
+      className={`funfact-area ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""
+        }`}
     >
       <div className="container">
         <div className="row align-items-center">
@@ -20,7 +19,7 @@ const CountDownTwo = ({ spaceTopClass, spaceBottomClass, dateTime }) => {
                 <Countdown date={new Date(dateTime)} renderer={Renderer} />
               </div>
               <div className="funfact-btn funfact-btn-green btn-hover">
-                <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                <Link to={process.env.PUBLIC_URL + "/shop"}>
                   SHOP NOW
                 </Link>
               </div>
@@ -28,7 +27,7 @@ const CountDownTwo = ({ spaceTopClass, spaceBottomClass, dateTime }) => {
           </div>
           <div className="col-md-6">
             <div className="fruits-deal-img">
-              <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+              <Link to={process.env.PUBLIC_URL + "/shop"}>
                 <img
                   src={process.env.PUBLIC_URL + "/assets/img/banner/deal.png"}
                   alt=""

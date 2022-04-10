@@ -6,6 +6,8 @@ import { ToastProvider } from "react-toast-notifications";
 import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
+import { BASE_URL, getProducts } from "./api/api";
+import { fetchProducts } from "./redux/actions/productActions";
 
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
@@ -45,7 +47,39 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
 const App = (props) => {
-  useEffect(() => {
+  useEffect(async () => {
+
+    const res = await getProducts();
+    console.log(res);
+    const filtedRes = res.map(item => {
+      return {
+        name: item.Product.title,
+        price: item.Product.price,
+        category: ['sleeveless'],
+        thumb: `${BASE_URL}public/products/${item.id}/thumb/${item.thumb}`,
+        sizes: item.ProductColorSizes.map(item => item.size),
+        discount: 0,
+        fullDescription: item.detail,
+        id: item.id,
+        image: [`${BASE_URL}public/products/${item.id}/thumb/${item.thumb}`, ...item.ProductDisplays.map(dp => `${BASE_URL}public/products/${item.id}/displaies/${dp.image}`)],
+        new: true,
+        rating: 4,
+        saleCount: 12,
+        shortDescription: item.Product.detail,
+        sku: '12341234',
+        tag: ['dd'],
+        variation: [{
+          color: 'black', image: "dd", size: [
+            { name: 'x', stock: 3 }
+          ]
+        }]
+      }
+    })
+    console.log(filtedRes)
+    await props.dispatch(
+      fetchProducts(filtedRes)
+    )
+
     props.dispatch(
       loadLanguages({
         languages: {
@@ -100,7 +134,7 @@ const App = (props) => {
 
                 {/* Shop pages */}
                 <Route
-                  path={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                  path={process.env.PUBLIC_URL + "/shop"}
                   component={ShopGridStandard}
                 />
 

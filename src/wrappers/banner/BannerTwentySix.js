@@ -23,7 +23,7 @@ const BannerTwentySix = ({ spaceBottomClass }) => {
                   Medix Mask <br />
                   Up To 40% Off
                 </h2>
-                <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                <Link to={process.env.PUBLIC_URL + "/shop"}>
                   Shop Now
                 </Link>
               </div>
@@ -44,7 +44,7 @@ const BannerTwentySix = ({ spaceBottomClass }) => {
                   Hand Gloves <br />
                   Up To 30% Off
                 </h2>
-                <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                <Link to={process.env.PUBLIC_URL + "/shop"}>
                   Shop Now
                 </Link>
               </div>
@@ -66,7 +66,7 @@ const BannerTwentySix = ({ spaceBottomClass }) => {
                   Hand Sanitizer <br />
                   Up To 40% Off
                 </h2>
-                <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                <Link to={process.env.PUBLIC_URL + "/shop"}>
                   Shop Now
                 </Link>
               </div>

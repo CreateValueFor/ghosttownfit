@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 const CtaTwo = ({ spaceTopClass, spaceBottomClass }) => {
   return (
     <div
-      className={`cta-area bg-img ${spaceTopClass ? spaceTopClass : ""} ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }`}
+      className={`cta-area bg-img ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""
+        }`}
       style={{
-        backgroundImage: `url(${
-          process.env.PUBLIC_URL + "/assets/img/bg/cta-bg.jpg"
-        })`
+        backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/img/bg/cta-bg.jpg"
+          })`
       }}
     >
       <div className="container">
@@ -26,7 +24,7 @@ const CtaTwo = ({ spaceTopClass, spaceBottomClass }) => {
               </p>
               <Link
                 className="cta-btn"
-                to={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                to={process.env.PUBLIC_URL + "/shop"}
               >
                 SHOP NOW
               </Link>

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { getDiscountPrice } from "../../helpers/product";
@@ -32,11 +32,16 @@ const ProductImageDescription = ({
     discountedPrice * currency.currencyRate
   ).toFixed(2);
 
+  useEffect(() => {
+    console.log('fckfkc')
+    console.log(galleryType)
+    window.alert(galleryType)
+  }, [])
+
   return (
     <div
-      className={`shop-area ${spaceTopClass ? spaceTopClass : ""} ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }`}
+      className={`shop-area ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""
+        }`}
     >
       <div className="container">
         <div className="row">

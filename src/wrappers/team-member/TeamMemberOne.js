@@ -7,9 +7,8 @@ import TeamMemberOneSingle from "../../components/team-member/TeamMemberOneSingl
 const TeamMemberOne = ({ spaceTopClass, spaceBottomClass }) => {
   return (
     <div
-      className={`team-area ${spaceTopClass ? spaceTopClass : ""} ${
-        spaceBottomClass ? spaceBottomClass : ""
-      }`}
+      className={`team-area ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""
+        }`}
     >
       <div className="container">
         {/* section title */}

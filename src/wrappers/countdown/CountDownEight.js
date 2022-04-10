@@ -12,9 +12,8 @@ const CountDownEight = ({
 }) => {
   return (
     <div
-      className={`funfact-area funfact-valentine bg-img ${
-        spaceTopClass ? spaceTopClass : ""
-      } ${spaceBottomClass ? spaceBottomClass : ""}`}
+      className={`funfact-area funfact-valentine bg-img ${spaceTopClass ? spaceTopClass : ""
+        } ${spaceBottomClass ? spaceBottomClass : ""}`}
       style={{
         backgroundImage: `url(${process.env.PUBLIC_URL + backgroundImage})`
       }}
@@ -28,7 +27,7 @@ const CountDownEight = ({
                 <Countdown date={new Date(dateTime)} renderer={Renderer} />
               </div>
               <div className="funfact-btn btn-only-round funfact-btn-red-2 btn-hover">
-                <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                <Link to={process.env.PUBLIC_URL + "/shop"}>
                   SHOP NOW
                 </Link>
               </div>

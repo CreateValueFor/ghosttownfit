@@ -9,7 +9,7 @@ const BannerThirtyOne = ({ spaceBottomClass }) => {
         <div className="row">
           <div className="col-lg-6 pb-30">
             <div className="single-banner-3">
-              <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+              <Link to={process.env.PUBLIC_URL + "/shop"}>
                 <img
                   src={
                     process.env.PUBLIC_URL + "/assets/img/banner/banner-46.jpg"
@@ -22,7 +22,7 @@ const BannerThirtyOne = ({ spaceBottomClass }) => {
                 <h4>
                   Up To 40% Off <br /> All New Products
                 </h4>
-                <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                <Link to={process.env.PUBLIC_URL + "/shop"}>
                   Shop Now
                 </Link>
               </div>
@@ -30,7 +30,7 @@ const BannerThirtyOne = ({ spaceBottomClass }) => {
           </div>
           <div className="col-lg-6 pb-30">
             <div className="single-banner-3">
-              <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+              <Link to={process.env.PUBLIC_URL + "/shop"}>
                 <img
                   src={
                     process.env.PUBLIC_URL + "/assets/img/banner/banner-47.jpg"
@@ -43,7 +43,7 @@ const BannerThirtyOne = ({ spaceBottomClass }) => {
                 <h4>
                   Free Shipping & <br /> The Best Items Granted
                 </h4>
-                <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                <Link to={process.env.PUBLIC_URL + "/shop"}>
                   Shop Now
                 </Link>
               </div>
