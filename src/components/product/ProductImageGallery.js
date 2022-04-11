@@ -83,11 +83,12 @@ const ProductImageGallery = ({ product }) => {
                         <i className="pe-7s-expand1"></i>
                       </button>
                     </LightgalleryItem>
-                    <div className="single-image">
+                    <div className="single-image" style={{ position: 'relative', width: "100%", height: 0, paddingBottom: "130%", }}>
                       <img
                         src={process.env.PUBLIC_URL + single}
                         className="img-fluid"
                         alt=""
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                       />
                     </div>
                   </div>
@@ -102,11 +103,12 @@ const ProductImageGallery = ({ product }) => {
             product.image.map((single, key) => {
               return (
                 <div key={key}>
-                  <div className="single-image">
+                  <div className="single-image" style={{ position: 'relative', width: "100%", height: 0, paddingBottom: "130%", }}>
                     <img
                       src={process.env.PUBLIC_URL + single}
                       className="img-fluid"
                       alt=""
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                     />
                   </div>
                 </div>

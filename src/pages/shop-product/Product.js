@@ -13,6 +13,9 @@ const Product = ({ location, product }) => {
   const { pathname } = location;
 
 
+
+
+
   return (
     <Fragment>
       <MetaTags>
@@ -28,9 +31,9 @@ const Product = ({ location, product }) => {
         Shop Product
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible">
+      <LayoutOne>
         {/* breadcrumb */}
-        <Breadcrumb />
+        {/* <Breadcrumb /> */}
 
         {/* product description with image */}
         <ProductImageDescription
@@ -43,13 +46,14 @@ const Product = ({ location, product }) => {
         <ProductDescriptionTab
           spaceBottomClass="pb-90"
           productFullDesc={product.fullDescription}
+          productImage={product.descriptionImg}
         />
 
-        {/* related product slider */}
+        {/* related product slider
         <RelatedProductSlider
           spaceBottomClass="pb-95"
           category={product.category[0]}
-        />
+        /> */}
       </LayoutOne>
     </Fragment>
   );
@@ -62,9 +66,10 @@ Product.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   const itemId = ownProps.match.params.id;
+
   return {
     product: state.productData.products.filter(
-      single => single.id === itemId
+      single => single.id == itemId
     )[0]
   };
 };

@@ -50,18 +50,19 @@ const App = (props) => {
   useEffect(async () => {
 
     const res = await getProducts();
-    console.log(res);
+
     const filtedRes = res.map(item => {
       return {
         name: item.Product.title,
         price: item.Product.price,
-        category: ['sleeveless'],
+        category: [item.Product.SubCategory.name],
         thumb: `${BASE_URL}public/products/${item.id}/thumb/${item.thumb}`,
         sizes: item.ProductColorSizes.map(item => item.size),
         discount: 0,
         fullDescription: item.detail,
         id: item.id,
         image: [`${BASE_URL}public/products/${item.id}/thumb/${item.thumb}`, ...item.ProductDisplays.map(dp => `${BASE_URL}public/products/${item.id}/displaies/${dp.image}`)],
+        descriptionImg: !item.ProductImages ? [] : item.ProductImages.map(img => `${BASE_URL}public/products/${item.id}/images/${img.image}`),
         new: true,
         rating: 4,
         saleCount: 12,
@@ -69,13 +70,12 @@ const App = (props) => {
         sku: '12341234',
         tag: ['dd'],
         variation: [{
-          color: 'black', image: "dd", size: [
-            { name: 'x', stock: 3 }
-          ]
+          color: item.name, image: "dd", size:
+            item.ProductColorSizes.map(size => ({ name: size.size, stock: size.count }))
         }]
       }
     })
-    console.log(filtedRes)
+
     await props.dispatch(
       fetchProducts(filtedRes)
     )

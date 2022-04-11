@@ -1,9 +1,14 @@
-import PropTypes from "prop-types";
-import React from "react";
-import Tab from "react-bootstrap/Tab";
-import Nav from "react-bootstrap/Nav";
+import PropTypes from 'prop-types'
+import React from 'react'
+import Tab from 'react-bootstrap/Tab'
+import Nav from 'react-bootstrap/Nav'
+import { BASE_URL } from '../../api/api'
 
-const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
+const ProductDescriptionTab = ({
+  spaceBottomClass,
+  productFullDesc,
+  productImage,
+}) => {
   return (
     <div className={`description-review-area ${spaceBottomClass}`}>
       <div className="container">
@@ -11,39 +16,29 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
           <Tab.Container defaultActiveKey="productDescription">
             <Nav variant="pills" className="description-review-topbar">
               <Nav.Item>
-                <Nav.Link eventKey="additionalInfo">
-                  Additional Information
-                </Nav.Link>
+                <Nav.Link eventKey="additionalInfo">제품 이미지</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productDescription">Description</Nav.Link>
+                <Nav.Link eventKey="productDescription">제품 상세</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productReviews">Reviews(2)</Nav.Link>
+                <Nav.Link eventKey="productReviews">리뷰(2)</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content className="description-review-bottom">
               <Tab.Pane eventKey="additionalInfo">
                 <div className="product-anotherinfo-wrapper">
                   <ul>
-                    <li>
-                      <span>Weight</span> 400 g
-                    </li>
-                    <li>
-                      <span>Dimensions</span>10 x 10 x 15 cm{" "}
-                    </li>
-                    <li>
-                      <span>Materials</span> 60% cotton, 40% polyester
-                    </li>
-                    <li>
-                      <span>Other Info</span> American heirloom jean shorts pug
-                      seitan letterpress
-                    </li>
+                    {productImage.map((item) => (
+                      <li>
+                        <img style={{ width: '100%' }} src={item} alt="item" />
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="productDescription">
-                {productFullDesc}
+                <div dangerouslySetInnerHTML={{ __html: productFullDesc }} />
               </Tab.Pane>
               <Tab.Pane eventKey="productReviews">
                 <div className="row">
@@ -54,7 +49,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                           <img
                             src={
                               process.env.PUBLIC_URL +
-                              "/assets/img/testimonial/1.jpg"
+                              '/assets/img/testimonial/1.jpg'
                             }
                             alt=""
                           />
@@ -92,7 +87,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                           <img
                             src={
                               process.env.PUBLIC_URL +
-                              "/assets/img/testimonial/2.jpg"
+                              '/assets/img/testimonial/2.jpg'
                             }
                             alt=""
                           />
@@ -158,7 +153,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                                 <textarea
                                   name="Your Review"
                                   placeholder="Message"
-                                  defaultValue={""}
+                                  defaultValue={''}
                                 />
                                 <input type="submit" defaultValue="Submit" />
                               </div>
@@ -175,12 +170,12 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 ProductDescriptionTab.propTypes = {
   productFullDesc: PropTypes.string,
-  spaceBottomClass: PropTypes.string
-};
+  spaceBottomClass: PropTypes.string,
+}
 
-export default ProductDescriptionTab;
+export default ProductDescriptionTab

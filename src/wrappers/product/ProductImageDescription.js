@@ -32,12 +32,6 @@ const ProductImageDescription = ({
     discountedPrice * currency.currencyRate
   ).toFixed(2);
 
-  useEffect(() => {
-    console.log('fckfkc')
-    console.log(galleryType)
-    window.alert(galleryType)
-  }, [])
-
   return (
     <div
       className={`shop-area ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""

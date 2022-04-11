@@ -85,6 +85,7 @@ const ProductImageGalleryLeftThumb = ({ product, thumbPosition }) => {
               ""
             )}
             <LightgalleryProvider>
+
               <Swiper {...gallerySwiperParams}>
                 {product.image &&
                   product.image.map((single, key) => {
@@ -98,11 +99,12 @@ const ProductImageGalleryLeftThumb = ({ product, thumbPosition }) => {
                             <i className="pe-7s-expand1"></i>
                           </button>
                         </LightgalleryItem>
-                        <div className="single-image">
+                        <div className="single-image" style={{ position: 'relative', width: "100%", height: 0, paddingBottom: "160%", }}>
                           <img
                             src={process.env.PUBLIC_URL + single}
                             className="img-fluid"
                             alt=""
+                            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                           />
                         </div>
                       </div>
@@ -122,7 +124,7 @@ const ProductImageGalleryLeftThumb = ({ product, thumbPosition }) => {
             <Swiper {...thumbnailSwiperParams}>
               {product.image &&
                 product.image.map((single, key) => {
-                  console.log(single)
+
                   return (
                     <div key={key}>
                       <div className="single-image">

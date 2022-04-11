@@ -7,6 +7,7 @@ import { addToCart } from "../../redux/actions/cartActions";
 import { addToWishlist } from "../../redux/actions/wishlistActions";
 import { addToCompare } from "../../redux/actions/compareActions";
 import Rating from "./sub-components/ProductRating";
+import { toCurrency } from "../../api/custom";
 
 const ProductDescriptionInfo = ({
   product,
@@ -46,13 +47,18 @@ const ProductDescriptionInfo = ({
       <div className="product-details-price">
         {discountedPrice !== null ? (
           <Fragment>
-            <span>{currency.currencySymbol + finalDiscountedPrice}</span>{" "}
+            {/* <span>{currency.currencySymbol + toCurrency(finalDiscountedPrice)}</span>{" "} */}
+            {/* <span className="old">
+              {currency.currencySymbol + toCurrency(finalProductPrice)}
+            </span> */}
+            <span>{'₩' + toCurrency(finalDiscountedPrice)}</span>{" "}
             <span className="old">
-              {currency.currencySymbol + finalProductPrice}
+              {'₩' + toCurrency(finalProductPrice)}
             </span>
           </Fragment>
         ) : (
-          <span>{currency.currencySymbol + finalProductPrice} </span>
+          // <span>{currency.currencySymbol + toCurrency(finalProductPrice)} </span>
+          <span>{'₩' + toCurrency(finalProductPrice)} </span>
         )}
       </div>
       {product.rating && product.rating > 0 ? (
@@ -70,7 +76,7 @@ const ProductDescriptionInfo = ({
 
       {product.variation ? (
         <div className="pro-details-size-color">
-          <div className="pro-details-color-wrap">
+          {/* <div className="pro-details-color-wrap">
             <span>Color</span>
             <div className="pro-details-color-content">
               {product.variation.map((single, key) => {
@@ -98,7 +104,7 @@ const ProductDescriptionInfo = ({
                 );
               })}
             </div>
-          </div>
+          </div> */}
           <div className="pro-details-size">
             <span>Size</span>
             <div className="pro-details-size-content">
@@ -214,7 +220,7 @@ const ProductDescriptionInfo = ({
               <i className="pe-7s-like" />
             </button>
           </div>
-          <div className="pro-details-compare">
+          {/* <div className="pro-details-compare">
             <button
               className={compareItem !== undefined ? "active" : ""}
               disabled={compareItem !== undefined}
@@ -227,7 +233,7 @@ const ProductDescriptionInfo = ({
             >
               <i className="pe-7s-shuffle" />
             </button>
-          </div>
+          </div> */}
         </div>
       )}
       {product.category ? (
@@ -248,7 +254,7 @@ const ProductDescriptionInfo = ({
       ) : (
         ""
       )}
-      {product.tag ? (
+      {/* {product.tag ? (
         <div className="pro-details-meta">
           <span>Tags :</span>
           <ul>
@@ -265,9 +271,9 @@ const ProductDescriptionInfo = ({
         </div>
       ) : (
         ""
-      )}
+      )} */}
 
-      <div className="pro-details-social">
+      {/* <div className="pro-details-social">
         <ul>
           <li>
             <a href="//facebook.com">
@@ -295,7 +301,7 @@ const ProductDescriptionInfo = ({
             </a>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
