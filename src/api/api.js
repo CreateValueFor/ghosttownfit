@@ -2,9 +2,9 @@ import axios from "axios"
 
 
 
-// const BASE_URL = "http://13.125.119.128:8000/"
-// export const BASE_URL = "https://ghost.callenge.co.kr/"
-export const BASE_URL = "http://localhost:8000/"
+
+export const BASE_URL = "https://ghost.callenge.co.kr/"
+// export const BASE_URL = "http://localhost:8000/"
 
 const _baseGetRequest = async (path) => {
     const headers = {

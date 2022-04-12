@@ -14,7 +14,7 @@ const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass }) => {
         </Link>
       </div> */}
 
-      <p class="copyright">
+      <p className="copyright">
         <span>상호명: 고스트타운</span><br />
         <span>대표자명: 박창진, 이남열</span><br />
         <span>사업자등록번호: 594-02-02002 <a href="https://www.ftc.go.kr/www/bizCommView.do?key=232&amp;apv_perm_no=2021449037530201200&amp;pageUnit=10&amp;searchCnd=wrkr_no&amp;searchKrwd=5940202002&amp;pageIndex=1" target="_blank"> 확인</a></span><br />

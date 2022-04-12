@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 import { BASE_URL, getProducts } from "./api/api";
 import { fetchProducts } from "./redux/actions/productActions";
+import "./App.css";
 
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
