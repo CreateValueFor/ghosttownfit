@@ -47,9 +47,9 @@ const ProductDescriptionInfo = ({
       <div className="product-details-price">
         {discountedPrice !== null ? (
           <Fragment>
-            {/* <span>{currency.currencySymbol + toCurrency(finalDiscountedPrice)}</span>{" "} */}
+            {/* <span>{'₩' + toCurrency(finalDiscountedPrice)}</span>{" "} */}
             {/* <span className="old">
-              {currency.currencySymbol + toCurrency(finalProductPrice)}
+              {'₩' + toCurrency(finalProductPrice)}
             </span> */}
             <span>{'₩' + toCurrency(finalDiscountedPrice)}</span>{" "}
             <span className="old">
@@ -57,7 +57,7 @@ const ProductDescriptionInfo = ({
             </span>
           </Fragment>
         ) : (
-          // <span>{currency.currencySymbol + toCurrency(finalProductPrice)} </span>
+          // <span>{'₩' + toCurrency(finalProductPrice)} </span>
           <span>{'₩' + toCurrency(finalProductPrice)} </span>
         )}
       </div>

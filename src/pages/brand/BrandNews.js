@@ -67,7 +67,7 @@ function News() {
 
             </p> */}
             <ul style={{ padding: "0px 15px 15px" }}>
-                {BrandStory.map((item, idx) => (
+                {BrandStory.reverse().map((item, idx) => (
                     <img key={idx} src={`https://ghosttown.s3.ap-northeast-2.amazonaws.com/브랜드스토리 (2)/${item}`} alt={`brandstory-${idx}`} />
                 ))}
             </ul>
