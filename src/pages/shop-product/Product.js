@@ -12,12 +12,6 @@ import ProductImageDescription from "../../wrappers/product/ProductImageDescript
 const Product = ({ location, product }) => {
   const { pathname } = location;
 
-  console.log(product);
-
-
-
-
-
   return (
     <Fragment>
       <MetaTags>

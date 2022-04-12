@@ -2,7 +2,7 @@ import React from 'react'
 
 function ThirdPartyAgreement() {
   return (
-    <div class="contents">
+    <div className="contents">
       아래 내용의 동의 여부는 회원가입에 영향을 미치지 않습니다. 단, 동의 거부시
       서비스 이용에 제한이 있을 수 있습니다.
       <br />

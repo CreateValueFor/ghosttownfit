@@ -7,17 +7,53 @@ import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import { postLogin } from "../../api/api";
+import { postLogin, postRegister } from "../../api/api";
 import { Accordion, Card } from "react-bootstrap";
+import UsageAgreement from "../../components/agreeement/UsageAgreement";
+import PrivacyAgreement from "../../components/agreeement/PrivacyAgreement";
+import ThirdPartyAgreement from "../../components/agreeement/ThirdPartyAgreement";
+import useUser from "../../redux/actions/userActions";
 
-const LoginRegister = ({ location }) => {
+const LoginRegister = ({ location, history }) => {
   const { pathname } = location;
+  const { login } = useUser();
   const [loginData, setLoginData] = useState({});
 
   const [registerData, setRegisterData] = useState({});
   const [registerPhase, setRegisterPhase] = useState(0);
+  const [agreement, setAgreement] = useState({});
+
+
+  const onRegister = async () => {
+    const res = await postRegister({
+      ...registerData,
+      ...agreement
+    })
+    if (res.success) {
+      window.alert('회원가입이 완료되었습니다.')
+      login(res.data)
+      history.push('/')
+    }
+  }
 
   const onNext = () => {
+    console.log(registerPhase)
+    if (registerPhase === 0) {
+      if (!agreement.usage || !agreement.private) {
+        return window.alert("필수 이용약관에 대한 동의가 필요합니다.")
+      }
+    }
+    if (registerPhase === 1) {
+      if (!registerData.password || !registerData.passwordCheck || !(registerData.password === registerData.passwordCheck)) {
+        return window.alert('비밀번호를 다시 확인해주세요.')
+      }
+    }
+    if (registerPhase === 2) {
+      if (!registerData.name || !registerData.phone || !registerData.email) {
+
+      }
+    }
+
     setRegisterPhase(prev => prev + 1)
   }
   const onCancel = () => {
@@ -25,6 +61,7 @@ const LoginRegister = ({ location }) => {
 
   }
   const onChangeReigsterInput = (e) => {
+    console.log(e);
     const { value, name } = e.target;
     setRegisterData(prev => {
       const newRegisterData = { ...prev }
@@ -84,14 +121,14 @@ const LoginRegister = ({ location }) => {
                               <input
                                 type="text"
                                 name="userid"
-                                placeholder="Username"
+                                placeholder="아이디를 입력해주세요."
                                 onChange={onChangeLoginInput}
                                 value={loginData.userid}
                               />
                               <input
                                 type="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder="비밀번호를 입력해주세요."
                                 onChange={onChangeLoginInput}
                                 value={loginData.password}
                               />
@@ -104,7 +141,9 @@ const LoginRegister = ({ location }) => {
                                   </Link>
                                 </div>
                                 <button onClick={async () => {
-                                  await postLogin(loginData)
+                                  const res = await postLogin(loginData)
+                                  login(res.data)
+                                  history.push('/')
                                 }}>
                                   <span>Login</span>
                                 </button>
@@ -118,28 +157,28 @@ const LoginRegister = ({ location }) => {
                           <div className="login-register-form">
                             <form onSubmit={(e) => { e.preventDefault(); }}>
                               {
-                                registerPhase === 0 && <Agreement />
+                                registerPhase === 0 && <Agreement agreement={agreement} setAgreement={setAgreement} />
                               }
                               {(registerPhase === 1) && (<div>
                                 <input
                                   type="text"
                                   name="userid"
                                   placeholder="아이디를 입력해주세요."
-                                  onClick={onChangeReigsterInput}
+                                  onChange={onChangeReigsterInput}
                                   value={registerData.userid}
                                 />
                                 <input
                                   type="password"
                                   name="password"
                                   placeholder="비밀번호를 입력해주세요."
-                                  onClick={onChangeReigsterInput}
+                                  onChange={onChangeReigsterInput}
                                   value={registerData.password}
                                 />
                                 <input
                                   name="passwordCheck"
                                   placeholder="비밀번호 확인"
                                   type="password"
-                                  onClick={onChangeReigsterInput}
+                                  onChange={onChangeReigsterInput}
                                   value={registerData.passwordCheck}
                                 />
                               </div>)}
@@ -148,14 +187,14 @@ const LoginRegister = ({ location }) => {
                                   type="text"
                                   name="name"
                                   placeholder="이름을 입력해주세요."
-                                  onClick={onChangeReigsterInput}
+                                  onChange={onChangeReigsterInput}
                                   value={registerData.name}
                                 />
                                 <input
                                   type="number"
                                   name="phone"
                                   placeholder="- 을 제외한 전화번호를 입력해주세요."
-                                  onClick={onChangeReigsterInput}
+                                  onChange={onChangeReigsterInput}
                                   value={registerData.phone}
 
                                 />
@@ -163,7 +202,7 @@ const LoginRegister = ({ location }) => {
                                   name="email"
                                   placeholder="이메일을 입력해주세요."
                                   type="email"
-                                  onClick={onChangeReigsterInput}
+                                  onChange={onChangeReigsterInput}
                                   value={registerData.email}
                                 />
                               </div>)}
@@ -174,6 +213,9 @@ const LoginRegister = ({ location }) => {
                                 </button>}
                                 {registerPhase < 2 && <button onClick={onNext} style={{ marginLeft: 'auto' }}>
                                   <span>다음</span>
+                                </button>}
+                                {registerPhase === 2 && <button style={{ marginLeft: 'auto' }} onClick={onRegister}>
+                                  <span>가입하기</span>
                                 </button>}
                               </div>
                             </form>
@@ -198,63 +240,47 @@ LoginRegister.propTypes = {
 
 export default LoginRegister;
 
-function Agreement() {
+function Agreement({ agreement, setAgreement }) {
+
+  const onAgreeChange = (e, type) => {
+    e.stopPropagation();
+
+    const checked = e.target.checked;
+    if (type === 'all') {
+      setAgreement({
+        all: checked,
+        usage: checked,
+        private: checked,
+        thirdParty: checked,
+        smsAgree: checked,
+        emailAgree: checked,
+      })
+    } else {
+      setAgreement(prev => {
+        const newAgreement = { ...prev };
+        newAgreement[type] = checked
+        return newAgreement
+      })
+    }
+  }
 
   return (
     <Accordion defaultActiveKey="0">
+      <h4 className="panel-title mr-3"><label for="all">전체 동의</label>
+        <input id="all" className="ml-3" type="checkbox" checked={agreement.all} onChange={(e) => { onAgreeChange(e, 'all') }} />
+      </h4>
       <Card className="single-my-account mb-20">
         <Card.Header className="panel-heading">
           <Accordion.Toggle variant="link" eventKey="0">
             <h3 className="panel-title">
-              <span>1 .</span> Edit your account information{" "}
+              <span>1. </span><label for="usage">이용약관 동의(필수)</label>
+              <input id='usage' className="ml-3" type="checkbox" checked={agreement.usage} onChange={(e) => { onAgreeChange(e, 'usage') }} />
             </h3>
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
-          <Card.Body>
-            <div className="myaccount-info-wrapper">
-              <div className="account-info-wrapper">
-                <h4>My Account Information</h4>
-                <h5>Your Personal Details</h5>
-              </div>
-              <div className="row">
-                <div className="col-lg-6 col-md-6">
-                  <div className="billing-info">
-                    <label>First Name</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6">
-                  <div className="billing-info">
-                    <label>Last Name</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-12 col-md-12">
-                  <div className="billing-info">
-                    <label>Email Address</label>
-                    <input type="email" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6">
-                  <div className="billing-info">
-                    <label>Telephone</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6">
-                  <div className="billing-info">
-                    <label>Fax</label>
-                    <input type="text" />
-                  </div>
-                </div>
-              </div>
-              <div className="billing-back-btn">
-                <div className="billing-btn">
-                  <button type="submit">Continue</button>
-                </div>
-              </div>
-            </div>
+          <Card.Body style={{ maxHeight: 300, overflowY: "scroll" }}>
+            <UsageAgreement />
           </Card.Body>
         </Accordion.Collapse>
       </Card>
@@ -262,37 +288,14 @@ function Agreement() {
         <Card.Header className="panel-heading">
           <Accordion.Toggle variant="link" eventKey="1">
             <h3 className="panel-title">
-              <span>2 .</span> Change your password
+              <span>2 .</span> <label for="private">개인정보처리방침 동의(필수)</label>
+              <input id="private" className="ml-3" type="checkbox" checked={agreement.private} onChange={(e) => { onAgreeChange(e, 'private') }} />
             </h3>
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="1">
-          <Card.Body>
-            <div className="myaccount-info-wrapper">
-              <div className="account-info-wrapper">
-                <h4>Change Password</h4>
-                <h5>Your Password</h5>
-              </div>
-              <div className="row">
-                <div className="col-lg-12 col-md-12">
-                  <div className="billing-info">
-                    <label>Password</label>
-                    <input type="password" />
-                  </div>
-                </div>
-                <div className="col-lg-12 col-md-12">
-                  <div className="billing-info">
-                    <label>Password Confirm</label>
-                    <input type="password" />
-                  </div>
-                </div>
-              </div>
-              <div className="billing-back-btn">
-                <div className="billing-btn">
-                  <button type="submit">Continue</button>
-                </div>
-              </div>
-            </div>
+          <Card.Body style={{ maxHeight: 300, overflowY: "scroll" }}>
+            <PrivacyAgreement />
           </Card.Body>
         </Accordion.Collapse>
       </Card>
@@ -300,44 +303,27 @@ function Agreement() {
         <Card.Header className="panel-heading">
           <Accordion.Toggle variant="link" eventKey="2">
             <h3 className="panel-title">
-              <span>3 .</span> Modify your address book entries{" "}
+              <span>3 .</span> <label for="thirdParty">개인정보 제3자 제공 동의(선택)</label>
+              <input id="thirdParty" className="ml-3" type="checkbox" checked={agreement.thirdParty} onChange={(e) => { onAgreeChange(e, 'thirdParty') }} />
             </h3>
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey="2">
-          <Card.Body>
-            <div className="myaccount-info-wrapper">
-              <div className="account-info-wrapper">
-                <h4>Address Book Entries</h4>
-              </div>
-              <div className="entries-wrapper">
-                <div className="row">
-                  <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                    <div className="entries-info text-center">
-                      <p>John Doe</p>
-                      <p>Paul Park </p>
-                      <p>Lorem ipsum dolor set amet</p>
-                      <p>NYC</p>
-                      <p>New York</p>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                    <div className="entries-edit-delete text-center">
-                      <button className="edit">Edit</button>
-                      <button>Delete</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="billing-back-btn">
-                <div className="billing-btn">
-                  <button type="submit">Continue</button>
-                </div>
-              </div>
-            </div>
+          <Card.Body style={{ maxHeight: 300, overflowY: "scroll" }}>
+            <ThirdPartyAgreement />
           </Card.Body>
         </Accordion.Collapse>
       </Card>
+      <div>
+        <div>
+          <label for="email">이메일 수신 동의 (선택)</label>
+          <input id="email" className="ml-3" type="checkbox" checked={agreement.emailAgree} onChange={(e) => { onAgreeChange(e, 'emailAgree') }} />
+        </div>
+        <div>
+          <label for="sms">문자 수신 동의 (선택)</label>
+          <input id="sms" className="ml-3" type="checkbox" checked={agreement.smsAgree} onChange={(e) => { onAgreeChange(e, 'smsAgree') }} />
+        </div>
+      </div>
     </Accordion>
   )
 }

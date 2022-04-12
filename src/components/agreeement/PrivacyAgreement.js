@@ -2,8 +2,8 @@ import React from 'react'
 
 function PrivacyAgreement() {
   return (
-    <div class="contents">
-      <div class="fr-view fr-view-privacy-required">
+    <div className="contents">
+      <div className="fr-view fr-view-privacy-required">
         <p>
           &nbsp;** 본 양식은 쇼핑몰 운영에 도움을 드리고자 샘플로 제공되는
           서식으로 쇼핑몰 운영형태에 따른 수정이 필요합니다. 쇼핑몰에 적용하시기

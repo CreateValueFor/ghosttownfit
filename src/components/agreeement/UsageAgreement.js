@@ -2,8 +2,8 @@ import React from 'react'
 
 function UsageAgreement() {
   return (
-    <div class="contents">
-      <div class="fr-view fr-view-mall-agreement">
+    <div className="contents">
+      <div className="fr-view fr-view-mall-agreement">
         <p>
           제1조(목적)
           <br />이 약관은 고스트타운(전자상거래 사업자)이 운영하는
