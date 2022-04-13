@@ -37,8 +37,8 @@ function getCookie(cName) {
     return unescape(cValue);
 }
 
-export const BASE_URL = "https://ghost.callenge.co.kr/"
-// export const BASE_URL = "http://localhost:8000/"
+// export const BASE_URL = "https://ghost.callenge.co.kr/"
+export const BASE_URL = "http://localhost:8000/"
 
 const _baseGetRequest = async (path) => {
     const headers = {
@@ -48,6 +48,9 @@ const _baseGetRequest = async (path) => {
     return res.data
 }
 const _basePostRequest = async (path, param) => {
+    if (!TOKEN) {
+        TOKEN = getCookie("gt-acst")
+    }
     const headers = {
         authorization: `Bearer ${TOKEN}`
     }
@@ -107,6 +110,7 @@ export const getPartners = async () => {
     const res = await _baseGetRequest('partner')
     return res.data
 }
+
 
 /**
  * 문의사항 불러오기 - GET

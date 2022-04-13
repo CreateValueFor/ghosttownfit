@@ -18,6 +18,7 @@ const userReducer = (state = initState, action) => {
             User: user
         }
     } else if (action.type === LOGOUT) {
+        console.log('logout')
         return {
             isLoggedIn: false,
             User: {}
