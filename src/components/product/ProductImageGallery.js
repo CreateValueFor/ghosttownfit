@@ -25,7 +25,7 @@ const ProductImageGallery = ({ product }) => {
     getSwiper: getGallerySwiper,
     spaceBetween: 10,
     loopedSlides: 4,
-    loop: true,
+    loop: false,
     effect: "fade"
   };
 
@@ -36,7 +36,7 @@ const ProductImageGallery = ({ product }) => {
     loopedSlides: 4,
     touchRatio: 0.2,
     freeMode: true,
-    loop: true,
+    loop: false,
     slideToClickedSlide: true,
     navigation: {
       nextEl: ".swiper-button-next",

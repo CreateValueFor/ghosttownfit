@@ -52,6 +52,10 @@ const App = (props) => {
 
     const res = await getProducts();
 
+    if (!res.length) {
+      return;
+    }
+
     const filtedRes = res.map(item => {
       return {
         name: item.Product.title,
@@ -90,7 +94,7 @@ const App = (props) => {
         }
       })
     );
-  });
+  }, []);
 
   return (
     <ToastProvider placement="bottom-left">

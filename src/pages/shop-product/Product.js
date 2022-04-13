@@ -15,10 +15,10 @@ const Product = ({ location, product }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Product Page</title>
+        <title>고스트타운 피트니스 | 제품 소개</title>
         <meta
           name="description"
-          content="Product page of flone react minimalist eCommerce template."
+          content="고스트타운 피트니스의 제품 소개 페이지입니다."
         />
       </MetaTags>
 

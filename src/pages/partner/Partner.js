@@ -18,7 +18,7 @@ const Partnership = () => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Fashion Home</title>
+        <title>고스트타운 | 파트너</title>
         <meta
           name="description"
           content="Fashion home of flone react minimalist eCommerce template."

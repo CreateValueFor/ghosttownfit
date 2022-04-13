@@ -48,6 +48,7 @@ const ProductGridSingle = ({
                   className="hover-img"
                   src={process.env.PUBLIC_URL + product.image[1]}
                   alt=""
+                  style={{ height: '100%' }}
                 />
               ) : (
                 ""

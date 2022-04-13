@@ -78,15 +78,15 @@ const ShopGridStandard = ({ location, products }) => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-lg-12 d-flex flex-nowrap">
+                            <div className="col-lg-12 d-flex flex-nowrap" style={{ overflowX: "scroll" }}>
                                 <p className="title mr-2">ALL </p>
-                                <p className="mr-2">T-SHIRTS </p>
-                                <p className=" mr-2">SLEEVELESS </p>
-                                <p className=" mr-2">HOODIES & SWEATSHIRTS </p>
-                                <p className=" mr-2">JACKETS </p>
-                                <p className=" mr-2">SHORTS </p>
-                                <p className=" mr-2">JEANS & JOGGERS </p>
-                                <p className=" mr-2">SOCKS </p>
+                                <p className="category-item mr-2">T-SHIRTS </p>
+                                <p className="category-item mr-2">SLEEVELESS </p>
+                                <p className="category-item mr-2">HOODIES & SWEATSHIRTS </p>
+                                <p className="category-item mr-2">JACKETS </p>
+                                <p className="category-item mr-2">SHORTS </p>
+                                <p className="category-item mr-2">JEANS & JOGGERS </p>
+                                <p className="category-item mr-2">SOCKS </p>
                             </div>
                         </div>
                         <div className="row">

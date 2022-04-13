@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 import { connect } from "react-redux";
@@ -7,18 +7,57 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { getDiscountPrice } from "../../helpers/product";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import DaumPostcode from 'react-daum-postcode'
 
 const Checkout = ({ location, cartItems, currency }) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
+  const [address, setAddress] = useState(""); // 주소
+  const [addressDetail, setAddressDetail] = useState("") // 상세주소
+
+  const [isOpenPost, setIsOpenPost] = useState(true);
+
+
+
+  const onChangeOpenPost = () => {
+    setIsOpenPost(!isOpenPost);
+  };
+
+  const onCompletePost = (data) => {
+    let fullAddr = data.address;
+    let extraAddr = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddr += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddr += extraAddr !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddr += extraAddr !== '' ? ` (${extraAddr})` : '';
+    }
+
+    setAddress(data.zonecode);
+    setAddressDetail(fullAddr);
+    setIsOpenPost(false);
+  };
+
+  const postCodeStyle = {
+    display: 'block',
+    position: 'relative',
+    top: '0%',
+    width: '100%',
+    height: '400px',
+    padding: '7px',
+  };
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Checkout</title>
+        <title>고스트타운 | 주문서 작성</title>
         <meta
           name="description"
-          content="Checkout page of flone react minimalist eCommerce template."
+          content="고스트타운 주문확인 페이지입니다."
         />
       </MetaTags>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
@@ -34,91 +73,47 @@ const Checkout = ({ location, cartItems, currency }) => {
               <div className="row">
                 <div className="col-lg-7">
                   <div className="billing-info-wrap">
-                    <h3>Billing Details</h3>
+                    <h3>수령자 정보</h3>
                     <div className="row">
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>First Name</label>
-                          <input type="text" />
+                          <label>수령인</label>
+                          <input type="text" placeholder="수령인 정보를 입력해주세요." />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>Last Name</label>
-                          <input type="text" />
+                          <label>휴대전화</label>
+                          <input type="number" placeholder=" '-' 를 제외하고 입력해주세요." />
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-info mb-20">
-                          <label>Company Name</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-select mb-20">
-                          <label>Country</label>
-                          <select>
-                            <option>Select a country</option>
-                            <option>Azerbaijan</option>
-                            <option>Bahamas</option>
-                            <option>Bahrain</option>
-                            <option>Bangladesh</option>
-                            <option>Barbados</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>Street Address</label>
+                          <label>배송지 주소</label>
                           <input
                             className="billing-address"
-                            placeholder="House number and street name"
+                            placeholder="배송지 주소를 입력해주세요."
                             type="text"
+                            onClick={onChangeOpenPost}
+                            value={address}
                           />
+                          {isOpenPost ? (
+                            <DaumPostcode style={postCodeStyle} autoClose onComplete={onCompletePost} />
+                          ) : null}
                           <input
-                            placeholder="Apartment, suite, unit etc."
+                            placeholder="상세 주소를 입력해주세요."
                             type="text"
                           />
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>Town / City</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>State / County</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Postcode / ZIP</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Phone</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6">
-                        <div className="billing-info mb-20">
-                          <label>Email Address</label>
-                          <input type="text" />
                         </div>
                       </div>
                     </div>
 
                     <div className="additional-info-wrap">
-                      <h4>Additional information</h4>
+
                       <div className="additional-info">
-                        <label>Order notes</label>
+                        <label>배송 메모</label>
                         <textarea
-                          placeholder="Notes about your order, e.g. special notes for delivery. "
+                          placeholder="배송 메모를 입력해주세요."
                           name="message"
                           defaultValue={""}
                         />
@@ -129,7 +124,7 @@ const Checkout = ({ location, cartItems, currency }) => {
 
                 <div className="col-lg-5">
                   <div className="your-order-area">
-                    <h3>Your order</h3>
+                    <h3>주문 확인</h3>
                     <div className="your-order-wrap gray-bg-4">
                       <div className="your-order-product-info">
                         <div className="your-order-top">
@@ -181,13 +176,14 @@ const Checkout = ({ location, cartItems, currency }) => {
                         </div>
                         <div className="your-order-bottom">
                           <ul>
-                            <li className="your-order-shipping">Shipping</li>
-                            <li>Free shipping</li>
+                            <li className="your-order-shipping">배송료</li>
+                            <li>{'₩' +
+                              (3500).toFixed(2)}</li>
                           </ul>
                         </div>
                         <div className="your-order-total">
                           <ul>
-                            <li className="order-total">Total</li>
+                            <li className="order-total">주문금액</li>
                             <li>
                               {'₩' +
                                 cartTotalPrice.toFixed(2)}
@@ -198,7 +194,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <div className="payment-method"></div>
                     </div>
                     <div className="place-order mt-25">
-                      <button className="btn-hover">Place Order</button>
+                      <button className="btn-hover">결제하기</button>
                     </div>
                   </div>
                 </div>
@@ -211,7 +207,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <i className="pe-7s-cash"></i>
                     </div>
                     <div className="item-empty-area__text">
-                      No items found in cart to checkout <br />{" "}
+                      장바구니에 담긴 상품이 없습니다. <br />{" "}
                       <Link to={process.env.PUBLIC_URL + "/shop"}>
                         Shop Now
                       </Link>
@@ -221,6 +217,7 @@ const Checkout = ({ location, cartItems, currency }) => {
               </div>
             )}
           </div>
+
         </div>
       </LayoutOne>
     </Fragment>
