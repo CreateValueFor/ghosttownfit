@@ -46,7 +46,7 @@ const IconGroup = ({
       <div className="same-style account-setting d-none d-lg-block">
         {!isLoggedIn ? (
           <div>
-            <Link to={process.env.PUBLIC_URL + "/login-register"}>로그인/회원가입</Link>
+            <Link style={{ whiteSpace: 'nowrap' }} to={process.env.PUBLIC_URL + "/login-register"}>로그인/회원가입</Link>
           </div>
         ) : (
           <>
