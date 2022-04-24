@@ -111,10 +111,10 @@ const Checkout = ({ location, cartItems, currency, history }) => {
           imp_uid: rsp.imp_uid
         })
         if (res.success) {
-          window.alert("결제 성공")
-          history.push("/")
         }
 
+        window.alert("결제 성공")
+        history.push("/")
         console.log('결제 성공')
       } else {
         console.log(rsp)
