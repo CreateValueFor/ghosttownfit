@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Tab from 'react-bootstrap/Tab'
 import Nav from 'react-bootstrap/Nav'
 import { BASE_URL } from '../../api/api'
@@ -9,6 +9,23 @@ const ProductDescriptionTab = ({
   productFullDesc,
   productImage,
 }) => {
+
+  useEffect(() => {
+    if (productImage) {
+      console.log('제품 사진이 없어')
+    } else {
+      console.log('제품 사진 보여짐')
+      console.log(productImage)
+    }
+  }, [productImage])
+
+  if (!productImage) {
+    return (
+      <></>
+    )
+  }
+
+
   return (
     <div className={`description-review-area ${spaceBottomClass}`}>
       <div className="container">

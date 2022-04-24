@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
@@ -11,6 +11,15 @@ import ProductImageDescription from "../../wrappers/product/ProductImageDescript
 
 const Product = ({ location, product }) => {
   const { pathname } = location;
+
+  useEffect(() => {
+    console.log(product)
+    if (!product) {
+      console.log("product 없음")
+    } else {
+      console.log('product 있음')
+    }
+  }, [])
 
   return (
     <Fragment>

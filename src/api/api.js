@@ -138,7 +138,7 @@ export const getCalendar = async () => {
  * 
  * 제품 목록 불러오기 - GET
  */
-export const getProducts = async () => {
+export const getProducts = async (param) => {
     const res = await _baseGetRequest('product/color')
     return res.data;
 }

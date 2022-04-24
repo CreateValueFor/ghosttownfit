@@ -30,7 +30,7 @@ const ProductGridSingle = ({
   return (
     <Fragment>
       <div
-        className={`col-xl-3 col-md-6 col-lg-4 col-sm-6 ${sliderClassName ? sliderClassName : ""
+        className={`col-xl-3 col-md-6 col-lg-4 col-sm-6 col-xs-6 col-6  ${sliderClassName ? sliderClassName : ""
           }`}
       >
         <div

@@ -31,6 +31,21 @@ const MyAccount = ({ location }) => {
             <div className="row">
               <div className="ml-auto mr-auto col-lg-9">
                 <div className="myaccount-wrapper">
+                  <h2>주문 목록</h2>
+                  <table className="table table-bordered w-100">
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: 'center' }}>상품정보</th>
+                        <th style={{ textAlign: 'center' }}>주문일자</th>
+                        <th style={{ textAlign: 'center' }}>주문번호</th>
+                        <th style={{ textAlign: 'center' }}>주문금액(수량)</th>
+                        <th style={{ textAlign: 'center' }}>주문 상태</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
                   <Accordion defaultActiveKey="0">
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
@@ -43,47 +58,7 @@ const MyAccount = ({ location }) => {
                       <Accordion.Collapse eventKey="0">
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
-                            <div className="account-info-wrapper">
-                              <h4>My Account Information</h4>
-                              <h5>Your Personal Details</h5>
-                            </div>
-                            <div className="row">
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>First Name</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Last Name</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-12 col-md-12">
-                                <div className="billing-info">
-                                  <label>Email Address</label>
-                                  <input type="email" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Telephone</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6 col-md-6">
-                                <div className="billing-info">
-                                  <label>Fax</label>
-                                  <input type="text" />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="billing-back-btn">
-                              <div className="billing-btn">
-                                <button type="submit">Continue</button>
-                              </div>
-                            </div>
+
                           </div>
                         </Card.Body>
                       </Accordion.Collapse>

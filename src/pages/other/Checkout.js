@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 import { connect } from "react-redux";
@@ -9,6 +9,25 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import DaumPostcode from 'react-daum-postcode'
 
+const Payment = (efffect, deps) => {
+  useEffect(() => {
+    const jquery = document.createElement('script')
+    jquery.src = 'https://code.jquery.com/jquery-1.12.4.min.js'
+    const iamport = document.createElement("script")
+    iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"
+    document.head.appendChild(jquery);
+    document.head.appendChild(iamport);
+    return () => {
+      document.head.removeChild(jquery)
+      document.head.removeChild(iamport)
+    }
+
+  }, []);
+  return;
+}
+
+
+
 const Checkout = ({ location, cartItems, currency }) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
@@ -16,6 +35,48 @@ const Checkout = ({ location, cartItems, currency }) => {
   const [addressDetail, setAddressDetail] = useState("") // 상세주소
 
   const [isOpenPost, setIsOpenPost] = useState(true);
+
+  useEffect(() => {
+    const jquery = document.createElement('script')
+    jquery.src = 'https://code.jquery.com/jquery-1.12.4.min.js'
+    const iamport = document.createElement("script")
+    iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"
+    document.head.appendChild(jquery);
+    document.head.appendChild(iamport);
+    return () => {
+      document.head.removeChild(jquery)
+      document.head.removeChild(iamport)
+    }
+
+  }, []);
+
+  const onClickPayment = (data) => {
+    const { IMP } = window;
+    IMP.init('imp90851675')
+    const test = {
+
+      pg: 'uplus',
+      pay_method: 'card',
+      merchant_uid: "order_no_0001", //상점에서 생성한 고유 주문번호
+      name: '주문명:결제테스트',
+      amount: 14000,
+      buyer_email: 'iamport@siot.do',
+      buyer_name: '구매자이름',
+      buyer_tel: '010-1234-5678',
+      buyer_addr: '서울특별시 강남구 삼성동',
+      buyer_postcode: '123-456',
+      m_redirect_url: 'http://localhost:3000',
+
+    }
+    IMP.request_pay(test, function (res) {
+      if (res.success) {
+        console.log('결제 성공')
+      } else {
+        console.log(res)
+        console.log('결제 실패')
+      }
+    })
+  }
 
 
 
@@ -194,7 +255,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <div className="payment-method"></div>
                     </div>
                     <div className="place-order mt-25">
-                      <button className="btn-hover">결제하기</button>
+                      <button onClick={onClickPayment} className="btn-hover">결제하기</button>
                     </div>
                   </div>
                 </div>
