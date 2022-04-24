@@ -77,7 +77,8 @@ const App = (props) => {
         variation: [{
           color: item.name, image: "dd", size:
             item.ProductColorSizes.map(size => ({ name: size.size, stock: size.count }))
-        }]
+        }],
+        sizes: item.ProductColorSizes.map(size => ({ name: size.size, id: size.id }))
       }
     })
 

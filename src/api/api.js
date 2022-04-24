@@ -37,8 +37,8 @@ function getCookie(cName) {
     return unescape(cValue);
 }
 
-export const BASE_URL = "https://ghost.callenge.co.kr/"
-// export const BASE_URL = "http://localhost:8000/"
+// export const BASE_URL = "https://ghost.callenge.co.kr/"
+export const BASE_URL = "http://localhost:8000/"
 
 const _baseGetRequest = async (path) => {
     const headers = {
@@ -48,7 +48,10 @@ const _baseGetRequest = async (path) => {
     return res.data
 }
 const _basePostRequest = async (path, param) => {
+    console.log("POST action start")
     if (!TOKEN) {
+        console.log('there is no token')
+        console.log(getCookie('gt-acst'))
         TOKEN = getCookie("gt-acst")
     }
     const headers = {
@@ -56,6 +59,7 @@ const _basePostRequest = async (path, param) => {
     }
     const { data } = await axios.post(`${BASE_URL + path}`, param, { headers })
     if (data.token) {
+        console.log('토큰 저장 시작')
         setCookie('gt-acst', data.token.access, 1)
         setCookie('gt-rfst', data.token.refresh, 14)
     }
@@ -141,4 +145,18 @@ export const getCalendar = async () => {
 export const getProducts = async (param) => {
     const res = await _baseGetRequest('product/color')
     return res.data;
+}
+
+/**
+ * 
+ * 주문 시작하기 - POST
+ */
+export const startOrder = async (param) => {
+    const res = await _basePostRequest('order', param);
+    return res;
+}
+
+export const checkOrder = async (param) => {
+    const res = await _basePostRequest('order/check', param);
+    return res
 }

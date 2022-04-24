@@ -8,41 +8,38 @@ import { getDiscountPrice } from "../../helpers/product";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import DaumPostcode from 'react-daum-postcode'
-
-const Payment = (efffect, deps) => {
-  useEffect(() => {
-    const jquery = document.createElement('script')
-    jquery.src = 'https://code.jquery.com/jquery-1.12.4.min.js'
-    const iamport = document.createElement("script")
-    iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"
-    document.head.appendChild(jquery);
-    document.head.appendChild(iamport);
-    return () => {
-      document.head.removeChild(jquery)
-      document.head.removeChild(iamport)
-    }
-
-  }, []);
-  return;
-}
+import { checkOrder, startOrder } from "../../api/api";
 
 
 
-const Checkout = ({ location, cartItems, currency }) => {
+const Checkout = ({ location, cartItems, currency, history }) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
   const [address, setAddress] = useState(""); // 주소
   const [addressDetail, setAddressDetail] = useState("") // 상세주소
 
+  const [orderData, setOrderData] = useState({});
+
   const [isOpenPost, setIsOpenPost] = useState(true);
 
-  useEffect(() => {
+  useEffect(async () => {
     const jquery = document.createElement('script')
     jquery.src = 'https://code.jquery.com/jquery-1.12.4.min.js'
     const iamport = document.createElement("script")
     iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"
     document.head.appendChild(jquery);
     document.head.appendChild(iamport);
+    // await startOrder(
+    //   {
+    //     receiver: "이민기",
+    //     phone: "010-7179-6841",
+    //     address1: "경기 성남시 수정구 창업로 18",
+    //     postCode: "13449",
+    //     address2: "디어스판교 865호",
+    //     deliveryMessage: "배송 주의해주세요",
+    //     productList: '[{"id":1,"count":2}]'
+    //   }
+    // )
     return () => {
       document.head.removeChild(jquery)
       document.head.removeChild(iamport)
@@ -50,34 +47,94 @@ const Checkout = ({ location, cartItems, currency }) => {
 
   }, []);
 
-  const onClickPayment = (data) => {
+  const onClickDefaultPayment = async (purchaseMethod) => {
+    // 검증계 추가
+
+    // 주문 데이터 생성
+    const order = {
+      ...orderData,
+      productList: cartItems.map(cart => {
+        const selectedItem = cart.sizes.find(elem => elem.name === cart.selectedProductSize)
+        return {
+          id: selectedItem.id,
+          count: cart.quantity
+        }
+      }),
+      purchaseMethod,
+      purchaseAmount: (
+        cartItems.reduce((acc, cur, idx) => {
+          console.log(cartItems)
+          return acc += cur.price * cur.quantity;
+        }, 0) + 3500
+      )
+    }
+    console.log(order)
+    const res = await startOrder(order)
+    console.log(res);
+    if (res.success) {
+      payOrder(res, purchaseMethod)
+
+    } else {
+      window.alert(res.message)
+    }
+
+
+  }
+
+  const payOrder = (issuedData, purchaseMethod) => {
+    const { buyer, amount, serialNumber } = issuedData
     const { IMP } = window;
+    const orderName = cartItems.length > 1 ?
+      `${cartItems[0].name} ${cartItems[0].quantity}개 외 ${cartItems.length - 1}건`
+      : `${cartItems[0].name} ${cartItems[0].quantity}개`
     IMP.init('imp90851675')
+
     const test = {
 
-      pg: 'uplus',
+      pg: purchaseMethod,
       pay_method: 'card',
-      merchant_uid: "order_no_0001", //상점에서 생성한 고유 주문번호
-      name: '주문명:결제테스트',
-      amount: 14000,
-      buyer_email: 'iamport@siot.do',
-      buyer_name: '구매자이름',
-      buyer_tel: '010-1234-5678',
-      buyer_addr: '서울특별시 강남구 삼성동',
-      buyer_postcode: '123-456',
+      merchant_uid: serialNumber, //상점에서 생성한 고유 주문번호
+      name: orderName,
+      amount: amount,
+      buyer_email: buyer.email,
+      buyer_name: buyer.name,
+      buyer_tel: buyer.phone,
+      buyer_addr: orderData.address1,
+      buyer_postcode: orderData.postCode,
       m_redirect_url: 'http://localhost:3000',
 
     }
-    IMP.request_pay(test, function (res) {
-      if (res.success) {
+    IMP.request_pay(test, async function (rsp) {
+      if (rsp.success) {
+        console.log(rsp)
+        const res = await checkOrder({
+          imp_uid: rsp.imp_uid
+        })
+        if (res.success) {
+          window.alert("결제 성공")
+          history.push("/")
+        }
+
         console.log('결제 성공')
       } else {
-        console.log(res)
+        console.log(rsp)
         console.log('결제 실패')
       }
     })
   }
 
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value)
+
+    setOrderData(prev => {
+      const newOrder = { ...prev }
+      newOrder[name] = value
+      console.log(newOrder)
+
+      return newOrder
+    })
+  }
 
 
   const onChangeOpenPost = () => {
@@ -101,6 +158,11 @@ const Checkout = ({ location, cartItems, currency }) => {
     setAddress(data.zonecode);
     setAddressDetail(fullAddr);
     setIsOpenPost(false);
+    setOrderData(prev => ({
+      ...prev,
+      postCode: data.zonecode,
+      address1: fullAddr
+    }))
   };
 
   const postCodeStyle = {
@@ -139,13 +201,13 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>수령인</label>
-                          <input type="text" placeholder="수령인 정보를 입력해주세요." />
+                          <input onChange={onChange} name="receiver" type="text" placeholder="수령인 정보를 입력해주세요." />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>휴대전화</label>
-                          <input type="number" placeholder=" '-' 를 제외하고 입력해주세요." />
+                          <input onChange={onChange} name="phone" type="number" placeholder=" '-' 를 제외하고 입력해주세요." />
                         </div>
                       </div>
                       <div className="col-lg-12">
@@ -156,7 +218,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                             placeholder="배송지 주소를 입력해주세요."
                             type="text"
                             onClick={onChangeOpenPost}
-                            value={address}
+                            value={addressDetail}
                           />
                           {isOpenPost ? (
                             <DaumPostcode style={postCodeStyle} autoClose onComplete={onCompletePost} />
@@ -164,6 +226,8 @@ const Checkout = ({ location, cartItems, currency }) => {
                           <input
                             placeholder="상세 주소를 입력해주세요."
                             type="text"
+                            name="address2"
+                            onChange={onChange}
                           />
                         </div>
                       </div>
@@ -175,8 +239,10 @@ const Checkout = ({ location, cartItems, currency }) => {
                         <label>배송 메모</label>
                         <textarea
                           placeholder="배송 메모를 입력해주세요."
-                          name="message"
+                          name="deliveryMessage"
                           defaultValue={""}
+                          onChange={onChange}
+
                         />
                       </div>
                     </div>
@@ -203,10 +269,10 @@ const Checkout = ({ location, cartItems, currency }) => {
                               );
                               const finalProductPrice = (
                                 cartItem.price * currency.currencyRate
-                              ).toFixed(2);
+                              );
                               const finalDiscountedPrice = (
                                 discountedPrice * currency.currencyRate
-                              ).toFixed(2);
+                              );
 
                               discountedPrice != null
                                 ? (cartTotalPrice +=
@@ -223,12 +289,12 @@ const Checkout = ({ location, cartItems, currency }) => {
                                       ? '₩' +
                                       (
                                         finalDiscountedPrice *
-                                        cartItem.quantity
-                                      ).toFixed(2)
+                                        cartItem.quantity + "원"
+                                      )
                                       : '₩' +
                                       (
-                                        finalProductPrice * cartItem.quantity
-                                      ).toFixed(2)}
+                                        finalProductPrice * cartItem.quantity + "원"
+                                      )}
                                   </span>
                                 </li>
                               );
@@ -239,7 +305,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                           <ul>
                             <li className="your-order-shipping">배송료</li>
                             <li>{'₩' +
-                              (3500).toFixed(2)}</li>
+                              (3500) + "원"}</li>
                           </ul>
                         </div>
                         <div className="your-order-total">
@@ -247,7 +313,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                             <li className="order-total">주문금액</li>
                             <li>
                               {'₩' +
-                                cartTotalPrice.toFixed(2)}
+                                (Number(cartTotalPrice) + 3500) + "원"}
                             </li>
                           </ul>
                         </div>
@@ -255,7 +321,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <div className="payment-method"></div>
                     </div>
                     <div className="place-order mt-25">
-                      <button onClick={onClickPayment} className="btn-hover">결제하기</button>
+                      <button onClick={() => onClickDefaultPayment('uplus')} className="btn-hover">결제하기</button>
                     </div>
                   </div>
                 </div>

@@ -156,10 +156,10 @@ const Compare = ({
                               );
                               const finalProductPrice = (
                                 compareItem.price * currency.currencyRate
-                              ).toFixed(2);
+                              );
                               const finalDiscountedPrice = (
                                 discountedPrice * currency.currencyRate
-                              ).toFixed(2);
+                              );
                               return (
                                 <td className="product-price" key={key}>
                                   {discountedPrice !== null ? (

@@ -19,10 +19,10 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
               );
               const finalProductPrice = (
                 single.price * currency.currencyRate
-              ).toFixed(2);
+              );
               const finalDiscountedPrice = (
                 discountedPrice * currency.currencyRate
-              ).toFixed(2);
+              );
 
               discountedPrice != null
                 ? (cartTotalPrice += finalDiscountedPrice * single.quantity)
@@ -52,7 +52,7 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                     <span>
                       {discountedPrice !== null
                         ? '₩' + finalDiscountedPrice
-                        : '₩' + finalProductPrice}
+                        : '₩' + finalProductPrice} 원
                     </span>
                     {single.selectedProductColor &&
                       single.selectedProductSize ? (
@@ -77,7 +77,7 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
             <h4>
               Total :{" "}
               <span className="shop-total">
-                {'₩' + cartTotalPrice.toFixed(2)}
+                {'₩' + cartTotalPrice} 원
               </span>
             </h4>
           </div>

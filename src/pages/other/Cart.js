@@ -75,10 +75,10 @@ const Cart = ({
                             );
                             const finalProductPrice = (
                               cartItem.price * currency.currencyRate
-                            ).toFixed(2);
+                            );
                             const finalDiscountedPrice = (
                               discountedPrice * currency.currencyRate
-                            ).toFixed(2);
+                            );
 
                             discountedPrice != null
                               ? (cartTotalPrice +=
@@ -196,11 +196,11 @@ const Cart = ({
                                     ? '₩' +
                                     (
                                       finalDiscountedPrice * cartItem.quantity
-                                    ).toFixed(2)
+                                    )
                                     : '₩' +
                                     (
                                       finalProductPrice * cartItem.quantity
-                                    ).toFixed(2)}
+                                    )}
                                 </td>
 
                                 <td className="product-remove">
@@ -313,14 +313,14 @@ const Cart = ({
                       <h5>
                         Total products{" "}
                         <span>
-                          {'₩' + cartTotalPrice.toFixed(2)}
+                          {'₩' + cartTotalPrice}
                         </span>
                       </h5>
 
                       <h4 className="grand-totall-title">
                         Grand Total{" "}
                         <span>
-                          {'₩' + cartTotalPrice.toFixed(2)}
+                          {'₩' + cartTotalPrice}
                         </span>
                       </h4>
                       <Link to={process.env.PUBLIC_URL + "/checkout"}>
