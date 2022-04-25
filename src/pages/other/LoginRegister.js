@@ -142,8 +142,14 @@ const LoginRegister = ({ location, history }) => {
                                 </div>
                                 <button onClick={async () => {
                                   const res = await postLogin(loginData)
-                                  login(res.data)
-                                  history.push('/')
+                                  console.log(res);
+                                  if (res.success) {
+                                    login(res.data)
+                                    history.push('/')
+
+                                  } else {
+                                    window.alert("로그인 정보가 맞지 않습니다. 아이디 또는 비밀번호를 확인해주세요.")
+                                  }
                                 }}>
                                   <span>Login</span>
                                 </button>
