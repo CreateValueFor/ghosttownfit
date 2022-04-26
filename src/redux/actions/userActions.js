@@ -17,7 +17,13 @@ function useUserAction() {
     }
 
     const logout = async () => {
-        await getLogout();
+
+        try {
+            await getLogout();
+
+        } catch (error) {
+            console.error(error)
+        }
 
         dispatch({
             type: LOGOUT

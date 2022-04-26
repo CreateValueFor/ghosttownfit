@@ -89,9 +89,10 @@ export const postRegister = async (param) => {
  * @param - 
  */
 export const getLogout = async () => {
+    const res = await _baseGetRequest('auth/logout')
     delCookie('gt-acst');
     delCookie('gt-rfst');
-    return await _baseGetRequest('auth/logout')
+    return res
 }
 
 /**
