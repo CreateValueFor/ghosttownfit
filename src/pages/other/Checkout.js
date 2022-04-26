@@ -10,6 +10,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import DaumPostcode from 'react-daum-postcode'
 import { checkOrder, startOrder } from "../../api/api";
 import useUserAction from "../../redux/actions/userActions";
+import { deleteAllFromCart } from "../../redux/actions/cartActions";
 
 
 
@@ -115,7 +116,7 @@ const Checkout = ({ location, cartItems, currency, history }) => {
       buyer_tel: buyer.phone,
       buyer_addr: orderData.address1,
       buyer_postcode: orderData.postCode,
-      m_redirect_url: 'http://localhost:3000',
+      m_redirect_url: 'https://ghosttown.kr',
 
     }
     IMP.request_pay(test, async function (rsp) {
@@ -125,6 +126,7 @@ const Checkout = ({ location, cartItems, currency, history }) => {
           imp_uid: rsp.imp_uid
         })
         if (res.success) {
+          deleteAllFromCart();
         }
 
         window.alert("결제 성공")
