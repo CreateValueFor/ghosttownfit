@@ -52,16 +52,17 @@ const App = (props) => {
   useEffect(async () => {
 
     const res = await getProducts();
-
+    console.log(res)
     if (!res.length) {
       return;
     }
+
 
     const filtedRes = res.map(item => {
       return {
         name: item.Product.title,
         price: item.Product.price,
-        category: [item.Product.SubCategory.name],
+        category: [item.Product.SubCategory.name, 'fashion'],
         thumb: `${BASE_URL}public/products/${item.id}/thumb/${item.thumb}`,
         sizes: item.ProductColorSizes.map(item => item.size),
         discount: item.salePercent,
