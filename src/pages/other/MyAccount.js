@@ -1,14 +1,22 @@
-import PropTypes from "prop-types";
-import React, { Fragment } from "react";
-import MetaTags from "react-meta-tags";
-import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import Card from "react-bootstrap/Card";
-import Accordion from "react-bootstrap/Accordion";
-import LayoutOne from "../../layouts/LayoutOne";
-import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import PropTypes from 'prop-types'
+import React, { Fragment, useEffect, useState } from 'react'
+import MetaTags from 'react-meta-tags'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import Card from 'react-bootstrap/Card'
+import Accordion from 'react-bootstrap/Accordion'
+import LayoutOne from '../../layouts/LayoutOne'
+import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb'
+import { getOrder } from '../../api/api'
+import { orderStatus } from '../../api/custom'
 
 const MyAccount = ({ location }) => {
-  const { pathname } = location;
+  const { pathname } = location
+  const [orders, setOrders] = useState([])
+
+  useEffect(async () => {
+    const res = await getOrder()
+    setOrders(res.data)
+  }, [])
 
   return (
     <Fragment>
@@ -19,11 +27,11 @@ const MyAccount = ({ location }) => {
           content="Compare page of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         My Account
       </BreadcrumbsItem>
-      <LayoutOne >
+      <LayoutOne>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="myaccount-area pb-80 pt-100">
@@ -43,10 +51,21 @@ const MyAccount = ({ location }) => {
                       </tr>
                     </thead>
                     <tbody>
-
+                      {orders.map((item) => (
+                        <tr>
+                          <td>{item.name}</td>
+                          <td>{`${item.serialNumber.substr(0, 4)}년 
+                        ${item.serialNumber.substr(4, 2)}월
+                        ${item.serialNumber.substr(6, 2)}일
+                        `}</td>
+                          <td>{item.serialNumber}</td>
+                          <td>{item.eachAmount * item.count}</td>
+                          <td>{orderStatus(item.status)}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
-                  <Accordion defaultActiveKey="0">
+                  {/* <Accordion defaultActiveKey="0">
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
@@ -143,7 +162,7 @@ const MyAccount = ({ location }) => {
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
-                  </Accordion>
+                  </Accordion> */}
                 </div>
               </div>
             </div>
@@ -151,11 +170,11 @@ const MyAccount = ({ location }) => {
         </div>
       </LayoutOne>
     </Fragment>
-  );
-};
+  )
+}
 
 MyAccount.propTypes = {
-  location: PropTypes.object
-};
+  location: PropTypes.object,
+}
 
-export default MyAccount;
+export default MyAccount

@@ -41,6 +41,11 @@ export const BASE_URL = "https://ghost.callenge.co.kr/"
 // export const BASE_URL = "http://localhost:8000/"
 
 const _baseGetRequest = async (path) => {
+    if (!TOKEN) {
+        console.log('there is no token')
+        console.log(getCookie('gt-acst'))
+        TOKEN = getCookie("gt-acst")
+    }
     const headers = {
         authorization: `Bearer ${TOKEN}`
     }
@@ -161,11 +166,16 @@ export const getProducts = async (param) => {
  * 주문 시작하기 - POST
  */
 export const startOrder = async (param) => {
-    const res = await _basePostRequest('order', param);
+    const res = await _basePostRequest('v1/order', param);
     return res;
 }
 
 export const checkOrder = async (param) => {
-    const res = await _basePostRequest('order/check', param);
+    const res = await _basePostRequest('v1/order/check', param);
+    return res
+}
+
+export const getOrder = async () => {
+    const res = await _baseGetRequest('v1/order/customer');
     return res
 }

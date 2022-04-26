@@ -23,10 +23,11 @@ const Checkout = ({ location, cartItems, currency, history }) => {
 
   const [isOpenPost, setIsOpenPost] = useState(true);
 
-  const { user } = useUserAction()
+  const { isLoggedIn } = useUserAction()
 
   useEffect(async () => {
-    if (!user) {
+    if (!isLoggedIn) {
+      console.log(isLoggedIn)
       window.alert("로그인 정보가 없습니다. 로그인 혹은 회원가입을 진행해주세요.")
       history.push('/login-register')
     }
@@ -66,7 +67,11 @@ const Checkout = ({ location, cartItems, currency, history }) => {
         const selectedItem = cart.sizes.find(elem => elem.name === cart.selectedProductSize)
         return {
           id: selectedItem.id,
-          count: cart.quantity
+          count: cart.quantity,
+          name: cart.name,
+          thumb: cart.thumb,
+          colorId: cart.id,
+          price: cart.price
         }
       }),
       purchaseMethod,
