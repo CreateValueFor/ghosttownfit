@@ -9,6 +9,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import DaumPostcode from 'react-daum-postcode'
 import { checkOrder, startOrder } from "../../api/api";
+import useUserAction from "../../redux/actions/userActions";
 
 
 
@@ -22,7 +23,15 @@ const Checkout = ({ location, cartItems, currency, history }) => {
 
   const [isOpenPost, setIsOpenPost] = useState(true);
 
+  const { user } = useUserAction()
+
   useEffect(async () => {
+    if (!user) {
+      window.alert("로그인 정보가 없습니다. 로그인 혹은 회원가입을 진행해주세요.")
+      history.push('/login-register')
+    }
+
+    //아임포트 불러오기 
     const jquery = document.createElement('script')
     jquery.src = 'https://code.jquery.com/jquery-1.12.4.min.js'
     const iamport = document.createElement("script")

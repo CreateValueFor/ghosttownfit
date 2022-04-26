@@ -57,13 +57,21 @@ const _basePostRequest = async (path, param) => {
     const headers = {
         authorization: `Bearer ${TOKEN}`
     }
-    const { data } = await axios.post(`${BASE_URL + path}`, param, { headers })
-    if (data.token) {
-        console.log('토큰 저장 시작')
-        setCookie('gt-acst', data.token.access, 1)
-        setCookie('gt-rfst', data.token.refresh, 14)
+    let data;
+    try {
+        data = (await axios.post(`${BASE_URL + path}`, param, { headers })).data
+        if (data.token) {
+            console.log('토큰 저장 시작')
+            setCookie('gt-acst', data.token.access, 1)
+            setCookie('gt-rfst', data.token.refresh, 14)
+        }
+        return data;
+
+    } catch (error) {
+        console.log(error.response)
+        return error.response.data
     }
-    return data;
+
 }
 
 /**

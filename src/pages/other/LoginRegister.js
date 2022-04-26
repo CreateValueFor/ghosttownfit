@@ -29,10 +29,18 @@ const LoginRegister = ({ location, history }) => {
       ...registerData,
       ...agreement
     })
+    console.log(res)
     if (res.success) {
       window.alert('회원가입이 완료되었습니다.')
       login(res.data)
       history.push('/')
+    } else {
+      if (res.code === 'D02') {
+
+        window.alert("해당 아이디로 등록된 계정이 존재합니다.")
+      } else {
+        window.alert("문제가 발생하였습니다. 다시 시도해주세요.")
+      }
     }
   }
 
