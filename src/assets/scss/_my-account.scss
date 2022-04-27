@@ -1,5 +1,24 @@
 /*------ 25. My account Page  ------*/
 
+.destory-user--guide{
+  // line-height: 0px;
+  p{
+    margin-bottom: 0px;
+  }
+  button{
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 30px;
+    transition: 0.3s;
+    color: #ffffff;
+    background-color: #363f4d;
+    border:none;
+    outline:none;
+  }
+}
+
 .single-my-account {
   margin-bottom: 20px;
   border: 1px solid #ebebeb;

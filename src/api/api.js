@@ -52,6 +52,18 @@ const _baseGetRequest = async (path) => {
     const res = await axios.get(`${BASE_URL + path}`, { headers })
     return res.data
 }
+const _baseDeleteRequest = async (path) => {
+    if (!TOKEN) {
+        console.log('there is no token')
+        console.log(getCookie('gt-acst'))
+        TOKEN = getCookie("gt-acst")
+    }
+    const headers = {
+        authorization: `Bearer ${TOKEN}`
+    }
+    const res = await axios.delete(`${BASE_URL + path}`, { headers })
+    return res.data
+}
 const _basePostRequest = async (path, param) => {
     console.log("POST action start")
     if (!TOKEN) {
@@ -103,6 +115,18 @@ export const postRegister = async (param) => {
  */
 export const getLogout = async () => {
     const res = await _baseGetRequest('auth/logout')
+    delCookie('gt-acst');
+    delCookie('gt-rfst');
+    return res
+}
+
+/**
+ * 
+ * @param {*} param 
+ * @returns 
+ */
+export const destoryUser = async () => {
+    const res = await _baseDeleteRequest('auth')
     delCookie('gt-acst');
     delCookie('gt-rfst');
     return res
