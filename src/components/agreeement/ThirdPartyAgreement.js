@@ -9,7 +9,7 @@ function ThirdPartyAgreement() {
       <br />
       <br />
       <br />
-      - 제공 받는 자 : 이남열
+      - 제공 받는 자 : 고스트타운(GHOSTTOWN)
       <br />
       <br />
       <br />
