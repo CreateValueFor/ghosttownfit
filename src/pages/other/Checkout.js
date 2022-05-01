@@ -337,6 +337,13 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                       <div className="payment-method"></div>
                     </div>
                     <div className="place-order mt-25">
+                      <button onClick={() => onClickDefaultPayment('nice')} >나이스 페이먼츠</button>
+                      <button >네이버페이</button>
+                      <button >토스페이</button>
+                      <button >토스페이먼츠</button>
+                      <button >카카오페이</button>
+
+
                       <button onClick={() => onClickDefaultPayment('uplus')} className="btn-hover">결제하기</button>
                     </div>
                   </div>

@@ -63,6 +63,8 @@ const App = (props) => {
         window.location.reload();
 
       }
+    } else {
+      logout();
     }
 
 
