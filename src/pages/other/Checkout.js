@@ -64,17 +64,15 @@ const Checkout = ({ location, cartItems, currency, history }) => {
       orderData.phone &&
       orderData.postCode &&
       orderData.address1 &&
-      orderData.address2 &&
-      payMethod
+      orderData.address2
     ) {
       setValid(true)
     } else {
       setValid(false)
     }
-    console.log(orderData)
-  }, [payMethod, address, orderData])
+  }, [address, orderData])
 
-  const onClickDefaultPayment = async () => {
+  const onClickDefaultPayment = async (payMethod) => {
     // 검증계 추가
 
     // 주문 데이터 생성
@@ -109,7 +107,7 @@ const Checkout = ({ location, cartItems, currency, history }) => {
     }
   }
 
-  const payOrder = (issuedData) => {
+  const payOrder = (issuedData, payMethod) => {
     const { buyer, amount, serialNumber } = issuedData
     const { IMP } = window
     const orderName =
@@ -352,9 +350,20 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                       </div>
                       <div className="payment-method"></div>
                     </div>
-                    <h3 className="mt-3">결제 방식을 선택해주세요.</h3>
+                    {!valid && (
+                      <p className="payment-guide">필수 정보를 입력해주세요 </p>
+                    )}
+
+                    <button
+                      disabled={!valid}
+                      id="payment-btn"
+                      className="mb-3"
+                      onClick={() => onClickDefaultPayment('uplus')}
+                    >
+                      결제하기
+                    </button>
                     <div className="place-order mb-25">
-                      <button
+                      {/* <button
                         onClick={() => setPayMethod('nice')}
                         className={payMethod === 'nice' && 'selected'}
                       >
@@ -363,9 +372,14 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                           alt="nice payment"
                         />
                         <span>나이스 페이먼츠</span>
-                      </button>
+                      </button> */}
+
                       <button
-                        onClick={() => setPayMethod('naverpay')}
+                        disabled={!valid}
+                        onClick={() => {
+                          setPayMethod('naverpay')
+                          onClickDefaultPayment('naverpay')
+                        }}
                         className={payMethod === 'naverpay' && 'selected'}
                       >
                         <img
@@ -375,18 +389,11 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                         <span>네이버페이</span>
                       </button>
                       <button
-                        onClick={() => setPayMethod('uplus')}
-                        // className="btn-hover"
-                        className={payMethod === 'uplus' && 'selected'}
-                      >
-                        <img
-                          src={process.env.PUBLIC_URL + '/assets/toss.webp'}
-                          alt="nice payment"
-                        />
-                        <span>토스 페이먼츠</span>
-                      </button>
-                      <button
-                        onClick={() => setPayMethod('tosspay')}
+                        disabled={!valid}
+                        onClick={() => {
+                          setPayMethod('tosspay')
+                          onClickDefaultPayment('tosspay')
+                        }}
                         className={payMethod === 'tosspay' && 'selected'}
                       >
                         <img
@@ -396,7 +403,11 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                         <span>토스 간편결제</span>
                       </button>
                       <button
-                        onClick={() => setPayMethod('kakaopay')}
+                        disabled={!valid}
+                        onClick={() => {
+                          setPayMethod('kakaopay')
+                          onClickDefaultPayment('kakaopay')
+                        }}
                         className={payMethod === 'kakaopay' && 'selected'}
                       >
                         <img
@@ -406,16 +417,6 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                         <span>카카오페이</span>
                       </button>
                     </div>
-                    <button
-                      disabled={!valid}
-                      id="payment-btn"
-                      onClick={onClickDefaultPayment}
-                    >
-                      결제하기
-                    </button>
-                    {!valid && (
-                      <p className="payment-guide">필수 정보를 입력해주세요 </p>
-                    )}
                   </div>
                 </div>
               </div>

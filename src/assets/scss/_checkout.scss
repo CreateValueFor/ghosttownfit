@@ -290,14 +290,21 @@
     color: #fff;
     border: none;
     // border-radius: 50px;
-    background: none;
+    background-color: $theme-color;
     
-    background-color: #ccc;
+    
     &:hover {
       background-color: #333;
     }
     &.selected{
       background-color: $theme-color;
+    }
+    &:disabled{
+      background-color: #ccc;
+      
+    }
+    &:disabled:hover{
+      background-color: #ccc;
     }
     img{
       
