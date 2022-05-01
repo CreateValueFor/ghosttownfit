@@ -1,5 +1,7 @@
 import axios from "axios"
 
+export const BASE_URL = "https://ghost.callenge.co.kr/"
+// export const BASE_URL = "http://localhost:8000/"
 
 let TOKEN = "";
 
@@ -23,7 +25,7 @@ const delCookie = function delCookie_by_name(name) {
 }
 
 // 쿠키 가져오기 함수
-function getCookie(cName) {
+export function getCookie(cName) {
     cName = cName + '=';
     var cookieData = document.cookie;
     var start = cookieData.indexOf(cName);
@@ -37,20 +39,24 @@ function getCookie(cName) {
     return unescape(cValue);
 }
 
-export const BASE_URL = "https://ghost.callenge.co.kr/"
-// export const BASE_URL = "http://localhost:8000/"
+
 
 const _baseGetRequest = async (path) => {
     if (!TOKEN) {
-        console.log('there is no token')
-        console.log(getCookie('gt-acst'))
         TOKEN = getCookie("gt-acst")
     }
     const headers = {
         authorization: `Bearer ${TOKEN}`
     }
-    const res = await axios.get(`${BASE_URL + path}`, { headers })
-    return res.data
+    try {
+        const res = await axios.get(`${BASE_URL + path}`, { headers })
+        return res.data
+    } catch (err) {
+        console.log(err);
+        const { response: { data } } = err;
+        return data
+    }
+
 }
 const _baseDeleteRequest = async (path) => {
     if (!TOKEN) {
@@ -90,6 +96,11 @@ const _basePostRequest = async (path, param) => {
     }
 
 }
+
+export const checkToken = async () => {
+    return await _baseGetRequest('auth/token');
+}
+
 
 /**
  *

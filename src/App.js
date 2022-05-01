@@ -6,9 +6,10 @@ import { ToastProvider } from "react-toast-notifications";
 import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
-import { BASE_URL, getProducts } from "./api/api";
+import { BASE_URL, checkToken, getCookie, getProducts } from "./api/api";
 import { fetchProducts } from "./redux/actions/productActions";
 import "./App.css";
+import useUserAction from "./redux/actions/userActions";
 
 
 // home pages
@@ -49,7 +50,22 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
 const App = (props) => {
+  const { logout } = useUserAction();
   useEffect(async () => {
+    const token = getCookie();
+    if (token) {
+      const tokenValidate = await checkToken();
+      console.log(tokenValidate)
+      console.log(tokenValidate.errorCode)
+      if (tokenValidate.errorCode === 'T001') {
+        window.alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+        logout();
+        window.location.reload();
+
+      }
+    }
+
+
 
     const res = await getProducts();
     console.log(res)
