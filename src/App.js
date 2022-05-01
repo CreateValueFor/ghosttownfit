@@ -55,8 +55,7 @@ const App = (props) => {
     const token = getCookie('gt-acst');
     if (token) {
       const tokenValidate = await checkToken();
-      console.log(tokenValidate)
-      console.log(tokenValidate.errorCode)
+
       if (tokenValidate.errorCode === 'T001') {
         window.alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
         logout();
