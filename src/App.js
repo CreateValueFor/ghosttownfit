@@ -52,7 +52,7 @@ const NotFound = lazy(() => import("./pages/other/NotFound"));
 const App = (props) => {
   const { logout } = useUserAction();
   useEffect(async () => {
-    const token = getCookie();
+    const token = getCookie('gt-acst');
     if (token) {
       const tokenValidate = await checkToken();
       console.log(tokenValidate)
