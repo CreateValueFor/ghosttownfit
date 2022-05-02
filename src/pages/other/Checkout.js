@@ -7,10 +7,11 @@ import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { getDiscountPrice } from '../../helpers/product'
 import LayoutOne from '../../layouts/LayoutOne'
 import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb'
-import DaumPostcode from 'react-daum-postcode'
+
 import { checkOrder, startOrder } from '../../api/api'
 import useUserAction from '../../redux/actions/userActions'
 import { deleteAllFromCart } from '../../redux/actions/cartActions'
+import GetAddressModal from '../../components/checkout/GetAddressModal'
 
 const Checkout = ({ location, cartItems, currency, history }) => {
   const { pathname } = location
@@ -39,8 +40,24 @@ const Checkout = ({ location, cartItems, currency, history }) => {
     jquery.src = 'https://code.jquery.com/jquery-1.12.4.min.js'
     const iamport = document.createElement('script')
     iamport.src = 'https://cdn.iamport.kr/js/iamport.payment-1.1.7.js'
+    // const naverpay = document.createElement('script')
+    // naverpay.src = 'https://pay.naver.com/customer/js/naverPayButton.js'
+    // const naverpayMobile = document.createElement('script')
+    // naverpayMobile.src =
+    //   'https://pay.naver.com/customer/js/mobile/naverPayButton.js'
     document.head.appendChild(jquery)
     document.head.appendChild(iamport)
+    // document.head.appendChild(naverpay)
+    // document.head.appendChild(naverpayMobile)
+
+    // naver.NaverPayButton.apply({
+    //   BUTTON_KEY: 'CF92B951-3C88-43F3-9016-93761C1EFD95',
+    //   TYPE: 'C',
+    //   COLOR: 1,
+    //   COUNT: 2,
+    //   ENABLE: 'Y',
+    //   EMBED_ID: 'naverpay-btn',
+    // })
     // await startOrder(
     //   {
     //     receiver: "이민기",
@@ -192,15 +209,6 @@ const Checkout = ({ location, cartItems, currency, history }) => {
     }))
   }
 
-  const postCodeStyle = {
-    display: 'block',
-    position: 'relative',
-    top: '0%',
-    width: '100%',
-    height: '400px',
-    padding: '7px',
-  }
-
   return (
     <Fragment>
       <MetaTags>
@@ -245,22 +253,35 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                         </div>
                       </div>
                       <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>배송지 주소</label>
-                          <input
-                            className="billing-address"
-                            placeholder="배송지 주소를 입력해주세요."
-                            type="text"
-                            onClick={onChangeOpenPost}
-                            defaultValue={addressDetail}
+                        <label>배송지 주소</label>
+                        <div className="billing-info mb-20 ">
+                          <div className="d-flex">
+                            <input
+                              className="billing-address"
+                              type="text"
+                              placeholder="주소지를 검색해주세요."
+                              style={{ width: 300, background: '#dce0dd' }}
+                              readOnly
+                              defaultValue={addressDetail}
+                            />
+                            <button onClick={onChangeOpenPost} id="address-btn">
+                              검색
+                            </button>
+                          </div>
+                          <GetAddressModal
+                            show={isOpenPost}
+                            onCompletePost={onCompletePost}
+                            onHide={() => {
+                              setIsOpenPost(false)
+                            }}
                           />
-                          {isOpenPost ? (
+                          {/* {isOpenPost ? (
                             <DaumPostcode
                               style={postCodeStyle}
                               autoClose
                               onComplete={onCompletePost}
                             />
-                          ) : null}
+                          ) : null} */}
                           <input
                             placeholder="상세 주소를 입력해주세요."
                             type="text"
@@ -380,6 +401,7 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                           setPayMethod('naverpay')
                           onClickDefaultPayment('naverpay')
                         }}
+                        id="naverpay-btn"
                         className={payMethod === 'naverpay' && 'selected'}
                       >
                         <img
