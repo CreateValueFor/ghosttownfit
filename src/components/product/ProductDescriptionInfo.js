@@ -353,7 +353,7 @@ const ProductDescriptionInfo = ({
           </div> */}
         </div>
       )}
-      <button id="naverpay-btn" style={{ border: 'none', background: 'none' }} />
+      {/* <button id="naverpay-btn" style={{ border: 'none', background: 'none' }} /> */}
       {product.category ? (
         <div className="pro-details-meta">
           <span>Categories :</span>
