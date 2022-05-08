@@ -264,8 +264,9 @@
   }
   .place-order{
     display:flex;
-    flex-wrap:wrap;
-    justify-content: space-around;
+    flex-wrap:nowrap;
+    justify-content: space-between;
+    margin-left: -2rem;
     
   }
   .place-order > a,
@@ -290,7 +291,10 @@
 
     color: #000;
     border: 1px solid #ccc;
+    border: none;
+    font-size:12px;
     background-color: transparent;
+    white-space: nowrap;
     // border-radius: 50px;
     // border-color: $theme-color;
     

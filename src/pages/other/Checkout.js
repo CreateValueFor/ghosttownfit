@@ -563,10 +563,10 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                         className={payMethod === 'tosspay' && 'selected'}
                       >
                         <img
-                          src={process.env.PUBLIC_URL + '/assets/toss.webp'}
-                          alt="nice payment"
+                          src="https://ghosttown.s3.ap-northeast-2.amazonaws.com/toss.webp"
+                          alt="tosspay"
                         />
-                        <span>토스 간편결제</span>
+                        <span>토스페이</span>
                       </button>
                       <button
                         disabled={!valid}
