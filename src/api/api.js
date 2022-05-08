@@ -53,8 +53,12 @@ const _baseGetRequest = async (path) => {
         return res.data
     } catch (err) {
         console.log(err);
-        const { response: { data } } = err;
-        return data
+        if (err.response) {
+
+            const { response: { data } } = err;
+            return data
+        }
+        return err
     }
 
 }
@@ -212,5 +216,10 @@ export const checkOrder = async (param) => {
 
 export const getOrder = async () => {
     const res = await _baseGetRequest('v1/order/customer');
+    return res
+}
+
+export const getProfile = async () => {
+    const res = await _baseGetRequest("auth/profile")
     return res
 }

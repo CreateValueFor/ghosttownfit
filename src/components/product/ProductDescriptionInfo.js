@@ -44,9 +44,11 @@ const ProductDescriptionInfo = ({
 
   useEffect(async () => {
 
-    const user = await getProfile();
+    const user = (await getProfile()).data;
+    console.log(user)
 
     const { IMP } = window
+    IMP.init('imp90851675')
     const naverBtnChild = document.querySelector('.npay_button')
     const naverBtnChildPopUp = document.querySelector('.npay_storebtn_bx')
     if (naverBtnChild) {
@@ -64,31 +66,30 @@ const ProductDescriptionInfo = ({
       ENABLE: 'Y',
       EMBED_ID: 'naverpay-btn',
       BUY_BUTTON_HANDLER: async function () {
-
         //중략
         // 주문 데이터 생성
         const order = {
 
-          productList: cartItems.map((cart) => {
-            const selectedItem = cart.sizes.find(
-              (elem) => elem.name === cart.selectedProductSize
-            )
-            return {
-              id: selectedItem.id,
-              count: cart.quantity,
-              name: cart.name,
-              thumb: cart.thumb,
-              colorId: cart.id,
-              price: cart.price,
-            }
-          }),
+          receiver: user.name,
+          phone: user.phone.replaceAll("-", ""),
+          address1: "grant naver",
+          address2: "grant naver",
+          postCode: "00000",
+
+
+          productList: [{
+            id: product.id,
+            count: quantityCount,
+            name: product.name,
+            thumb: product.thumb,
+            colorId: product.id,
+            price: product.price,
+          }],
           purchaseMethod: 'naverco',
           purchaseAmount:
-            cartItems.reduce((acc, cur, idx) => {
-              return (acc += cur.price * cur.quantity)
-            }, 0) + 3500,
+            (product.price * (1 - product.discount / 100)) * quantityCount + 3500
+          ,
         }
-
         const res = await startOrder(order)
 
         if (!res.success) {
@@ -98,99 +99,35 @@ const ProductDescriptionInfo = ({
           return
         }
         const { buyer, amount, serialNumber } = res
-        const orderName =
-          cartItems.length > 1
-            ? `${cartItems[0].name} ${cartItems[0].quantity}개 외 ${cartItems.length - 1
-            }건`
-            : `${cartItems[0].name} ${cartItems[0].quantity}개`
+        const orderName = `${product.name} ${quantityCount}개`
 
-        const padyData = {
-          pg: 'naverco',
-          pay_method: 'card',
-          merchant_uid: serialNumber, //상점에서 생성한 고유 주문번호
-          name: orderName,
-          amount: amount,
-          buyer_email: buyer.email,
-          buyer_name: buyer.name,
-          buyer_tel: buyer.phone,
-          // buyer_addr: orderData.address1,
-          // buyer_postcode: orderData.postCode,
-          // m_redirect_url: 'https://ghosttown.kr',
-          m_redirect_url: window.location.href,
-          naverProducts: [
-            {
-              id: 'singleProductId', //선택된 옵션이 없는 상품
-              name: '네이버페이 상품1',
-              basePrice: 1000,
-              taxType: 'TAX_FREE', //TAX or TAX_FREE
-              quantity: 2,
-              infoUrl: 'http://www.iamport.kr/product/detail',
-              imageUrl: 'http://www.iamport.kr/product/detail/thumbnail',
-              giftName: '사은품A',
-              shipping: {
-                groupId: 'shipping-a',
-                method: 'DELIVERY', //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
-                baseFee: 2500,
-                feeRule: {
-                  freeByThreshold: 20000,
-                },
-                feePayType: 'PREPAYED', //PREPAYED(선불) 또는 CASH_ON_DELIVERY(착불)
-              },
-              supplements: [
-                {
-                  id: 'supplement-a',
-                  name: '추가구성품 A',
-                  price: 1000,
-                  quantity: 1,
-                },
-                {
-                  id: 'supplement-b',
-                  name: '추가구성품 B',
-                  price: 1200,
-                  quantity: 2,
-                },
-              ],
-            },
-          ],
-        }
         //핸들러 내에서 결제창 호출 함수 호출
         IMP.request_pay(
           {
             pg: 'naverco',
             pay_method: 'card',
-            merchant_uid: 'order_no_00012341234', // 상점에서 관리하는 주문 번호
-            name: '주문명:결제테스트',
+            merchant_uid: serialNumber,
+            name: orderName,
             amount: 14000,
-            buyer_email: 'iamport@siot.do',
-            buyer_name: '구매자이름',
-            buyer_tel: '010-1234-5678',
-            buyer_addr: '서울특별시 강남구 삼성동',
-            buyer_postcode: '123-456',
 
-            naverProducts: cartItems.map((cart) => {
-              const selectedItem = cart.sizes.find(
-                (elem) => elem.name === cart.selectedProductSize
-              )
-              return {
-                id: selectedItem.id,
-                quantity: cart.quantity,
-                name: cart.name,
-                imageUrl: cart.thumb,
-                infoUrl: `https://ghosttown.kr/product/${selectedItem.id}`,
-                colorId: cart.id,
-                basePrice: cart.price,
-                taxType: 'TAX',
-                shipping: {
-                  groupId: 'shipping-a',
-                  method: 'DELIVERY', //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
-                  baseFee: 3000,
-                  feeRule: {
-                    freeByThreshold: 20000,
-                  },
-                  feePayType: 'PREPAYED', //PREPAYED(선불) 또는 CASH_ON_DELIVERY(착불)
+            naverProducts: {
+              id: product.id,
+              quantity: quantityCount,
+              name: product.name,
+              imageUrl: product.image[0],
+              infoUrl: window.location.href,
+              basePrice: product.price,
+              taxType: 'TAX',
+              shipping: {
+                groupId: 'shipping-a',
+                method: 'DELIVERY', //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
+                baseFee: 3500,
+                feeRule: {
+                  freeByThreshold: 20000,
                 },
-              }
-            }),
+                feePayType: 'PREPAYED', //PREPAYED(선불) 또는 CASH_ON_DELIVERY(착불)
+              },
+            }
           },
           function (rsp) {
             if (!rsp.success) {
@@ -205,21 +142,15 @@ const ProductDescriptionInfo = ({
         //중략
         //핸들러 내에서 찜하기 함수 호출
         IMP.naver_zzim({
-          test: cartItems.map((cart) => {
-            const selectedItem = cart.sizes.find(
-              (elem) => elem.name === cart.selectedProductSize
-            )
-            return {
-              id: selectedItem.id,
-
-              name: cart.name,
-              desc: cart.shortDescription,
-              uprice: cart.price,
-              url: `https://ghosttown.kr/product/${selectedItem.id}`,
-              thumb: cart.thumb,
-              image: cart.thumb,
-            }
-          }),
+          naverProducts: {
+            id: product.id,
+            name: product.name,
+            desc: product.shortDescription,
+            uprice: product.price,
+            url: window.location.href,
+            thumb: product.image[0],
+            image: product.image[0],
+          }
         })
       },
     })
@@ -390,7 +321,7 @@ const ProductDescriptionInfo = ({
               <button disabled>Out of Stock</button>
             )}
           </div>
-          <button id="naverpay-btn" />
+
           <div className="pro-details-wishlist">
             <button
               className={wishlistItem !== undefined ? "active" : ""}
@@ -405,6 +336,7 @@ const ProductDescriptionInfo = ({
               <i className="pe-7s-like" />
             </button>
           </div>
+
           {/* <div className="pro-details-compare">
             <button
               className={compareItem !== undefined ? "active" : ""}
@@ -421,6 +353,7 @@ const ProductDescriptionInfo = ({
           </div> */}
         </div>
       )}
+      <button id="naverpay-btn" style={{ border: 'none', background: 'none' }} />
       {product.category ? (
         <div className="pro-details-meta">
           <span>Categories :</span>

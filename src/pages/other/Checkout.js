@@ -116,68 +116,20 @@ const Checkout = ({ location, cartItems, currency, history }) => {
               }건`
             : `${cartItems[0].name} ${cartItems[0].quantity}개`
 
-        const padyData = {
-          pg: 'naverco',
-          pay_method: 'card',
-          merchant_uid: serialNumber, //상점에서 생성한 고유 주문번호
-          name: orderName,
-          amount: amount,
-          buyer_email: buyer.email,
-          buyer_name: buyer.name,
-          buyer_tel: buyer.phone,
-          buyer_addr: orderData.address1,
-          buyer_postcode: orderData.postCode,
-          // m_redirect_url: 'https://ghosttown.kr',
-          m_redirect_url: window.location.href,
-          naverProducts: [
-            {
-              id: 'singleProductId', //선택된 옵션이 없는 상품
-              name: '네이버페이 상품1',
-              basePrice: 1000,
-              taxType: 'TAX_FREE', //TAX or TAX_FREE
-              quantity: 2,
-              infoUrl: 'http://www.iamport.kr/product/detail',
-              imageUrl: 'http://www.iamport.kr/product/detail/thumbnail',
-              giftName: '사은품A',
-              shipping: {
-                groupId: 'shipping-a',
-                method: 'DELIVERY', //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
-                baseFee: 2500,
-                feeRule: {
-                  freeByThreshold: 20000,
-                },
-                feePayType: 'PREPAYED', //PREPAYED(선불) 또는 CASH_ON_DELIVERY(착불)
-              },
-              supplements: [
-                {
-                  id: 'supplement-a',
-                  name: '추가구성품 A',
-                  price: 1000,
-                  quantity: 1,
-                },
-                {
-                  id: 'supplement-b',
-                  name: '추가구성품 B',
-                  price: 1200,
-                  quantity: 2,
-                },
-              ],
-            },
-          ],
-        }
         //핸들러 내에서 결제창 호출 함수 호출
         IMP.request_pay(
           {
             pg: 'naverco',
             pay_method: 'card',
-            merchant_uid: 'order_no_00012341234', // 상점에서 관리하는 주문 번호
-            name: '주문명:결제테스트',
-            amount: 14000,
-            buyer_email: 'iamport@siot.do',
-            buyer_name: '구매자이름',
-            buyer_tel: '010-1234-5678',
-            buyer_addr: '서울특별시 강남구 삼성동',
-            buyer_postcode: '123-456',
+            merchant_uid: serialNumber, //상점에서 생성한 고유 주문번호
+            name: orderName,
+            amount: amount,
+            buyer_email: buyer.email,
+            buyer_name: buyer.name,
+            buyer_tel: buyer.phone,
+            buyer_addr: orderData.address1,
+            buyer_postcode: orderData.postCode,
+            m_redirect_url: window.location.href,
 
             naverProducts: cartItems.map((cart) => {
               const selectedItem = cart.sizes.find(
@@ -195,7 +147,7 @@ const Checkout = ({ location, cartItems, currency, history }) => {
                 shipping: {
                   groupId: 'shipping-a',
                   method: 'DELIVERY', //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
-                  baseFee: 3000,
+                  baseFee: 3500,
                   feeRule: {
                     freeByThreshold: 20000,
                   },
@@ -217,7 +169,7 @@ const Checkout = ({ location, cartItems, currency, history }) => {
         //중략
         //핸들러 내에서 찜하기 함수 호출
         IMP.naver_zzim({
-          test: cartItems.map((cart) => {
+          naverProducts: cartItems.map((cart) => {
             const selectedItem = cart.sizes.find(
               (elem) => elem.name === cart.selectedProductSize
             )
