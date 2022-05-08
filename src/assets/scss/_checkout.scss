@@ -265,6 +265,7 @@
   .place-order{
     display:flex;
     flex-wrap:wrap;
+    justify-content: space-around;
     
   }
   .place-order > a,
@@ -274,7 +275,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 30%;
+    
     font-weight: 500;
     line-height: 1;
 
@@ -287,10 +288,11 @@
     letter-spacing: 1px;
     text-transform: uppercase;
 
-    color: #fff;
-    border: none;
+    color: #000;
+    border: 1px solid #ccc;
+    background-color: transparent;
     // border-radius: 50px;
-    background-color: $theme-color;
+    // border-color: $theme-color;
     
     
     &:hover {
@@ -300,11 +302,11 @@
       background-color: $theme-color;
     }
     &:disabled{
-      background-color: #ccc;
+      background-color: transparent;
       
     }
     &:disabled:hover{
-      background-color: #ccc;
+      background-color: transparent;
     }
     img{
       
