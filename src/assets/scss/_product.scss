@@ -545,19 +545,22 @@ $breakpoint-xsmall : 500px;
       }
     }
   }
-  &:hover .hover-img {
-    visibility: visible;
+  @media (hover:hover){
 
-    transform: translate(-50%, 0);
-
-    opacity: 1;
-  }
-  &:hover .product-action > div {
-    visibility: visible;
-
-    transform: translateY(0);
-
-    opacity: 1;
+    &:hover .hover-img {
+      visibility: visible;
+  
+      transform: translate(-50%, 0);
+  
+      opacity: 1;
+    }
+    &:hover .product-action > div {
+      visibility: visible;
+  
+      transform: translateY(0);
+  
+      opacity: 1;
+    }
   }
 }
 
