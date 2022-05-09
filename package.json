@@ -1,6 +1,6 @@
 {
   "name": "flone-react",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "dependencies": {
     "animate.css": "^3.7.2",
@@ -67,5 +67,6 @@
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8",
     "sass": "^1.29.0"
-  }
+  },
+  "homepage": "/"
 }

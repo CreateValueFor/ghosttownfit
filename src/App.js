@@ -10,6 +10,7 @@ import { BASE_URL, checkToken, getCookie, getProducts } from "./api/api";
 import { fetchProducts } from "./redux/actions/productActions";
 import "./App.css";
 import useUserAction from "./redux/actions/userActions";
+import { retryLazy } from "./lazyUtil";
 
 
 // home pages
