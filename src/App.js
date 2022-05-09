@@ -50,6 +50,10 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
+// 개인정보 처리방침 및 이용약관
+const PrivacyPolicy = lazy(() => import("./pages/other/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/other/TermsOfService"));
+
 const App = (props) => {
   const { logout } = useUserAction();
   useEffect(async () => {
@@ -228,6 +232,14 @@ const App = (props) => {
                 <Route
                   path={process.env.PUBLIC_URL + "/not-found"}
                   component={NotFound}
+                />
+                <Route
+                  path={process.env.PUBLIC_URL + "/privacy-policy"}
+                  component={PrivacyPolicy}
+                />
+                <Route
+                  path={process.env.PUBLIC_URL + "/terms-of-service"}
+                  component={TermsOfService}
                 />
 
                 <Route exact component={NotFound} />
