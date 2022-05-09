@@ -34,11 +34,12 @@ const ProductGridListSingle = ({
           }`}
       >
         <div
-          className={`product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
+          className={`product-wrap shop-product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
         >
 
           <div className="product-img">
             <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
+
               <img
                 className="default-img"
                 src={process.env.PUBLIC_URL + product.image[0]}
@@ -155,7 +156,7 @@ const ProductGridListSingle = ({
             </div>
           </div>
         </div>
-        <div className="shop-list-wrap mb-30">
+        <div className="shop-list-wrap shop-product-wrap mb-30">
           <div className="row">
             <div className="col-xl-4 col-md-5 col-sm-6">
               <div className="product-list-image-wrap">

@@ -44,7 +44,7 @@ const TabProduct = ({
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          <Tab.Content>
+          <Tab.Content className="tab-product-wrap">
             <Tab.Pane eventKey="newArrival">
               <div className="row">
                 <ProductGrid
@@ -56,7 +56,7 @@ const TabProduct = ({
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="bestSeller">
-              <div className="row">
+              <div className="row ">
                 <ProductGrid
                   category={category}
                   type="bestSeller"
