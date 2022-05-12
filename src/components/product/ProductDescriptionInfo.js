@@ -9,6 +9,7 @@ import { addToCompare } from "../../redux/actions/compareActions";
 import Rating from "./sub-components/ProductRating";
 // import { toCurrency } from "../../api/custom";
 import { getProfile, startOrder } from "../../api/api";
+import useUserAction from "../../redux/actions/userActions";
 
 const ProductDescriptionInfo = ({
   product,
@@ -42,10 +43,14 @@ const ProductDescriptionInfo = ({
     selectedProductSize
   );
 
+  const { user } = useUserAction();
+
+
   useEffect(async () => {
 
     const user = (await getProfile()).data;
-    console.log(user)
+
+
 
     const { IMP } = window
     IMP.init('imp90851675')
@@ -66,6 +71,10 @@ const ProductDescriptionInfo = ({
       ENABLE: 'Y',
       EMBED_ID: 'naverpay-btn',
       BUY_BUTTON_HANDLER: async function () {
+        if (!user) {
+          return window.alert("로그인이 필요합니다.")
+
+        }
         //중략
         // 주문 데이터 생성
         const order = {
@@ -154,7 +163,7 @@ const ProductDescriptionInfo = ({
         })
       },
     })
-  }, [])
+  }, [user])
 
   return (
     <div className="product-details-content ml-70">
