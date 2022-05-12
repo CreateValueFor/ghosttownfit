@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "image": "/assets/instagram/1.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/1.jpeg",
     "url": "https://www.instagram.com/p/CaJTJtppH0s/?utm_medium=copy_link"
   },
   {
     "id": 2,
-    "image": "/assets/instagram/2.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/2.jpeg",
     
     
     "url": "https://www.instagram.com/p/CY3Hxp4vq-c/?utm_medium=copy_link"
@@ -14,7 +14,7 @@
   },
   {
     "id": 3,
-    "image": "/assets/instagram/3.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/3.jpeg",
     
     
     "url": "https://www.instagram.com/p/CY23xc2vB6s/?utm_medium=copy_link"
@@ -22,7 +22,7 @@
   },
   {
     "id": 4,
-    "image": "/assets/instagram/4.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/4.jpeg",
     
     
     "url": "https://www.instagram.com/p/CY-qurtvIKo/?utm_medium=copy_link"
@@ -30,7 +30,7 @@
   },
   {
     "id": 5,
-    "image": "/assets/instagram/5.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/5.jpeg",
     
     
     "url": "https://www.instagram.com/p/CX-V8qCPPdT/?utm_medium=copy_link"
@@ -38,7 +38,7 @@
   },
   {
     "id": 6,
-    "image": "/assets/instagram/6.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/6.jpeg",
     
     
     "url": "https://www.instagram.com/p/Cb15EMmJpN-/"
@@ -46,7 +46,7 @@
   },
   {
     "id": 7,
-    "image": "/assets/instagram/7.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/7.jpeg",
     
     
     "url": "https://www.instagram.com/p/CTWWpr2nmEq/?utm_medium=copy_link"
@@ -54,7 +54,7 @@
   },
   {
     "id": 8,
-    "image": "/assets/instagram/8.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/8.jpeg",
     
     
     "url": "https://www.instagram.com/p/CY0gTTXPudy/?utm_medium=copy_link"
@@ -62,7 +62,7 @@
   },
   {
     "id": 9,
-    "image": "/assets/instagram/9.jpeg",
+    "image": "https://ghosttown.s3.ap-northeast-2.amazonaws.com/instagram/9.jpeg",
     
     
     "url": "https://www.instagram.com/p/CUyvYa0pwz3/?utm_medium=copy_link"

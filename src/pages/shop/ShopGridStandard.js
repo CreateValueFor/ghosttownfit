@@ -4,7 +4,7 @@ import MetaTags from 'react-meta-tags';
 import Paginator from 'react-hooks-paginator';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
 import { connect } from 'react-redux';
-import { getSortedProducts } from '../../helpers/product';
+import { getSortedProducts, getProducts } from '../../helpers/product';
 import LayoutOne from '../../layouts/LayoutOne';
 import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
 import ShopSidebar from '../../wrappers/product/ShopSidebar';
@@ -21,7 +21,8 @@ const ShopGridStandard = ({ location, products }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
     const [sortedProducts, setSortedProducts] = useState([]);
-    console.log(products)
+    const [category, setCategory] = useState('all')
+
 
     const pageLimit = 15;
     const { pathname } = location;
@@ -39,17 +40,28 @@ const ShopGridStandard = ({ location, products }) => {
         setFilterSortType(sortType);
         setFilterSortValue(sortValue);
     }
-    useEffect(() => {
 
-    }, [])
 
     useEffect(() => {
-        let sortedProducts = getSortedProducts(products, sortType, sortValue);
+        let newProduct = products;
+        if (category !== 'all') {
+            newProduct = getProducts(products, category)
+
+        }
+
+        let sortedProducts = getSortedProducts(newProduct, sortType, sortValue);
+        console.log(sortedProducts)
         const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
         sortedProducts = filterSortedProducts;
         setSortedProducts(sortedProducts);
         setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-    }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
+    }, [category, offset, products, sortType, sortValue, filterSortType, filterSortValue]);
+
+    const searchByCategory = (category) => {
+        console.log(category)
+        setCategory(category)
+    }
+
 
     return (
         <Fragment>
@@ -78,15 +90,15 @@ const ShopGridStandard = ({ location, products }) => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-lg-12 d-flex flex-nowrap">
-                                <p className="title mr-2">ALL </p>
-                                <p className="mr-2">T-SHIRTS </p>
-                                <p className=" mr-2">SLEEVELESS </p>
-                                <p className=" mr-2">HOODIES & SWEATSHIRTS </p>
-                                <p className=" mr-2">JACKETS </p>
-                                <p className=" mr-2">SHORTS </p>
-                                <p className=" mr-2">JEANS & JOGGERS </p>
-                                <p className=" mr-2">SOCKS </p>
+                            <div className="col-lg-12 d-flex flex-nowrap" style={{ overflowX: "scroll" }}>
+                                <p onClick={() => { searchByCategory('all') }} className="title mr-2">ALL </p>
+                                <p onClick={() => { searchByCategory('t-shirts') }} className="category-item mr-2">T-SHIRTS </p>
+                                <p onClick={() => { searchByCategory('sleeveless') }} className="category-item mr-2">SLEEVELESS </p>
+                                <p onClick={() => { searchByCategory('hoodies&sweatshirt') }} className="category-item mr-2">HOODIES & SWEATSHIRTS </p>
+                                <p onClick={() => { searchByCategory('jackets') }} className="category-item mr-2">JACKETS </p>
+                                <p onClick={() => { searchByCategory('shorts') }} className="category-item mr-2">SHORTS </p>
+                                <p onClick={() => { searchByCategory('pants&joggers') }} className="category-item mr-2">JEANS & JOGGERS </p>
+                                <p onClick={() => { searchByCategory('socks') }} className="category-item mr-2">SOCKS </p>
                             </div>
                         </div>
                         <div className="row">

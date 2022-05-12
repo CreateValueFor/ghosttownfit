@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 import { getProducts } from "../../helpers/product";
 import ProductGridSingle from "../../components/product/ProductGridSingle";
@@ -19,6 +19,9 @@ const ProductGrid = ({
   sliderClassName,
   spaceBottomClass
 }) => {
+  useEffect(() => {
+    console.log(products)
+  }, [])
   return (
     <Fragment>
       {products.map(product => {
@@ -66,6 +69,7 @@ ProductGrid.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
+
   return {
     products: getProducts(
       state.productData.products,

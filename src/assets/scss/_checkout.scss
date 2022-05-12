@@ -262,31 +262,104 @@
       }
     }
   }
+  .place-order{
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content: space-between;
+    margin-left: -2rem;
+    
+  }
   .place-order > a,
   .place-order > button {
+    display:flex;
+    margin: 1.65%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
     font-weight: 500;
     line-height: 1;
 
     z-index: 9;
 
-    display: block;
-
-    width: 100%;
+    
     padding: 18px 20px;
 
     text-align: center;
     letter-spacing: 1px;
     text-transform: uppercase;
 
-    color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
     border: none;
-    border-radius: 50px;
-    background: none;
-    background-color: $theme-color;
+    font-size:12px;
+    background-color: transparent;
+    white-space: nowrap;
+    // border-radius: 50px;
+    // border-color: $theme-color;
+    
+    
     &:hover {
       background-color: #333;
     }
+    &.selected{
+      background-color: $theme-color;
+    }
+    &:disabled{
+      background-color: transparent;
+      
+    }
+    &:disabled:hover{
+      background-color: transparent;
+    }
+    img{
+      
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+    }
+    span{
+      margin-top: 10px;
+    }
   }
+}
+#payment-btn{
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  line-height: 55px;
+
+  display: inline-block;
+
+  width: 100%;
+  height: 55px;
+
+  text-align: center;
+
+  color: #000;
+  border: none;
+  background: none;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  background: none;
+  background-color: $theme-color;
+  &:disabled{
+    background-color: #ccc;
+    
+  }
+  &:disabled:hover{
+    background-color: #ccc;
+  }
+
+  &:hover,
+  &.active {
+    color: #fff;
+    background-color: #000;
+  }
+}
+.payment-guide{
+  color: red;
+  padding: 10px;
 }
 
 .checkout-area {
@@ -295,4 +368,27 @@
       padding-bottom: 60px;
     }
   }
+}
+
+#address-btn{
+  
+  font-size: .875rem;
+  
+
+  display: inline-block;
+
+  width: 50px;
+  height: 45px;
+  // height: 100%;
+
+  text-align: center;
+
+  color: #000;
+  border: none;
+  background: none;
+  color: #fff;
+  border: none;
+
+  background: none;
+  background-color: $theme-color;
 }

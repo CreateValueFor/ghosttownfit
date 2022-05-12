@@ -33,10 +33,10 @@ const Cart = ({
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Cart</title>
+        <title>고스트타운 | 장바구니</title>
         <meta
           name="description"
-          content="Cart page of flone react minimalist eCommerce template."
+          content="고스트타운 장바구니 페이지입니다."
         />
       </MetaTags>
 
@@ -45,7 +45,7 @@ const Cart = ({
         Cart
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible">
+      <LayoutOne >
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
@@ -75,10 +75,10 @@ const Cart = ({
                             );
                             const finalProductPrice = (
                               cartItem.price * currency.currencyRate
-                            ).toFixed(2);
+                            );
                             const finalDiscountedPrice = (
                               discountedPrice * currency.currencyRate
-                            ).toFixed(2);
+                            );
 
                             discountedPrice != null
                               ? (cartTotalPrice +=
@@ -135,17 +135,17 @@ const Cart = ({
                                   {discountedPrice !== null ? (
                                     <Fragment>
                                       <span className="amount old">
-                                        {currency.currencySymbol +
+                                        {'₩' +
                                           finalProductPrice}
                                       </span>
                                       <span className="amount">
-                                        {currency.currencySymbol +
+                                        {'₩' +
                                           finalDiscountedPrice}
                                       </span>
                                     </Fragment>
                                   ) : (
                                     <span className="amount">
-                                      {currency.currencySymbol +
+                                      {'₩' +
                                         finalProductPrice}
                                     </span>
                                   )}
@@ -193,14 +193,14 @@ const Cart = ({
                                 </td>
                                 <td className="product-subtotal">
                                   {discountedPrice !== null
-                                    ? currency.currencySymbol +
+                                    ? '₩' +
                                     (
                                       finalDiscountedPrice * cartItem.quantity
-                                    ).toFixed(2)
-                                    : currency.currencySymbol +
+                                    )
+                                    : '₩' +
                                     (
                                       finalProductPrice * cartItem.quantity
-                                    ).toFixed(2)}
+                                    )}
                                 </td>
 
                                 <td className="product-remove">
@@ -227,12 +227,12 @@ const Cart = ({
                         <Link
                           to={process.env.PUBLIC_URL + "/shop"}
                         >
-                          Continue Shopping
+                          쇼핑 계속하기
                         </Link>
                       </div>
                       <div className="cart-clear">
                         <button onClick={() => deleteAllFromCart(addToast)}>
-                          Clear Shopping Cart
+                          장바구니 비우기
                         </button>
                       </div>
                     </div>
@@ -240,7 +240,7 @@ const Cart = ({
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-4 col-md-6">
+                  {/* <div className="col-lg-4 col-md-6">
                     <div className="cart-tax">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gray">
@@ -282,9 +282,9 @@ const Cart = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className="col-lg-4 col-md-6">
+                  {/* <div className="col-lg-4 col-md-6">
                     <div className="discount-code-wrapper">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gray">
@@ -301,26 +301,26 @@ const Cart = ({
                         </form>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className="col-lg-4 col-md-12">
+                  <div className="col-lg-12 col-md-12">
                     <div className="grand-totall">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gary-cart">
-                          Cart Total
+                          장바구니 전체
                         </h4>
                       </div>
                       <h5>
                         Total products{" "}
                         <span>
-                          {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                          {'₩' + cartTotalPrice}
                         </span>
                       </h5>
 
                       <h4 className="grand-totall-title">
                         Grand Total{" "}
                         <span>
-                          {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                          {'₩' + cartTotalPrice}
                         </span>
                       </h4>
                       <Link to={process.env.PUBLIC_URL + "/checkout"}>

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
@@ -12,14 +12,22 @@ import ProductImageDescription from "../../wrappers/product/ProductImageDescript
 const Product = ({ location, product }) => {
   const { pathname } = location;
 
+  useEffect(() => {
+    console.log(product)
+    if (!product) {
+      console.log("product 없음")
+    } else {
+      console.log('product 있음')
+    }
+  }, [])
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Product Page</title>
+        <title>고스트타운 피트니스 | 제품 소개</title>
         <meta
           name="description"
-          content="Product page of flone react minimalist eCommerce template."
+          content="고스트타운 피트니스의 제품 소개 페이지입니다."
         />
       </MetaTags>
 
@@ -28,9 +36,9 @@ const Product = ({ location, product }) => {
         Shop Product
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible">
+      <LayoutOne>
         {/* breadcrumb */}
-        <Breadcrumb />
+        {/* <Breadcrumb /> */}
 
         {/* product description with image */}
         <ProductImageDescription
@@ -43,13 +51,14 @@ const Product = ({ location, product }) => {
         <ProductDescriptionTab
           spaceBottomClass="pb-90"
           productFullDesc={product.fullDescription}
+          productImage={product.descriptionImg}
         />
 
-        {/* related product slider */}
+        {/* related product slider
         <RelatedProductSlider
           spaceBottomClass="pb-95"
           category={product.category[0]}
-        />
+        /> */}
       </LayoutOne>
     </Fragment>
   );
@@ -62,9 +71,10 @@ Product.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   const itemId = ownProps.match.params.id;
+
   return {
     product: state.productData.products.filter(
-      single => single.id === itemId
+      single => single.id == itemId
     )[0]
   };
 };

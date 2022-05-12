@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProductCartQuantity } from "../../helpers/product";
@@ -7,6 +7,8 @@ import { addToCart } from "../../redux/actions/cartActions";
 import { addToWishlist } from "../../redux/actions/wishlistActions";
 import { addToCompare } from "../../redux/actions/compareActions";
 import Rating from "./sub-components/ProductRating";
+// import { toCurrency } from "../../api/custom";
+import { getProfile, startOrder } from "../../api/api";
 
 const ProductDescriptionInfo = ({
   product,
@@ -40,19 +42,138 @@ const ProductDescriptionInfo = ({
     selectedProductSize
   );
 
+  // useEffect(async () => {
+
+  //   const user = (await getProfile()).data;
+  //   console.log(user)
+
+  //   const { IMP } = window
+  //   IMP.init('imp90851675')
+  //   const naverBtnChild = document.querySelector('.npay_button')
+  //   const naverBtnChildPopUp = document.querySelector('.npay_storebtn_bx')
+  //   if (naverBtnChild) {
+  //     naverBtnChild.remove()
+  //   }
+  //   if (naverBtnChildPopUp) {
+  //     naverBtnChildPopUp.remove()
+  //   }
+
+  //   window.naver.NaverPayButton.apply({
+  //     BUTTON_KEY: 'CF92B951-3C88-43F3-9016-93761C1EFD95',
+  //     TYPE: 'A',
+  //     COLOR: 1,
+  //     COUNT: 2,
+  //     ENABLE: 'Y',
+  //     EMBED_ID: 'naverpay-btn',
+  //     BUY_BUTTON_HANDLER: async function () {
+  //       //중략
+  //       // 주문 데이터 생성
+  //       const order = {
+
+  //         receiver: user.name,
+  //         phone: user.phone.replaceAll("-", ""),
+  //         address1: "grant naver",
+  //         address2: "grant naver",
+  //         postCode: "00000",
+
+
+  //         productList: [{
+  //           id: product.id,
+  //           count: quantityCount,
+  //           name: product.name,
+  //           thumb: product.thumb,
+  //           colorId: product.id,
+  //           price: product.price,
+  //         }],
+  //         purchaseMethod: 'naverco',
+  //         purchaseAmount:
+  //           (product.price * (1 - product.discount / 100)) * quantityCount + 3500
+  //         ,
+  //       }
+  //       const res = await startOrder(order)
+
+  //       if (!res.success) {
+  //         window.alert(
+  //           '시스템 에러가 발생하였습니다. 잠시 후 다시 시도해주세요.'
+  //         )
+  //         return
+  //       }
+  //       const { buyer, amount, serialNumber } = res
+  //       const orderName = `${product.name} ${quantityCount}개`
+
+  //       //핸들러 내에서 결제창 호출 함수 호출
+  //       IMP.request_pay(
+  //         {
+  //           pg: 'naverco',
+  //           pay_method: 'card',
+  //           merchant_uid: serialNumber,
+  //           name: orderName,
+  //           amount: 14000,
+
+  //           naverProducts: {
+  //             id: product.id,
+  //             quantity: quantityCount,
+  //             name: product.name,
+  //             imageUrl: product.image[0],
+  //             infoUrl: window.location.href,
+  //             basePrice: product.price,
+  //             taxType: 'TAX',
+  //             shipping: {
+  //               groupId: 'shipping-a',
+  //               method: 'DELIVERY', //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
+  //               baseFee: 3500,
+  //               feeRule: {
+  //                 freeByThreshold: 20000,
+  //               },
+  //               feePayType: 'PREPAYED', //PREPAYED(선불) 또는 CASH_ON_DELIVERY(착불)
+  //             },
+  //           }
+  //         },
+  //         function (rsp) {
+  //           if (!rsp.success) {
+  //             var msg = '오류로 인해 결제가 시작되지 못하였습니다.'
+  //             msg += '에러내용: ' + rsp.error_msg
+  //             alert(msg)
+  //           }
+  //         }
+  //       )
+  //     },
+  //     WISHLIST_BUTTON_HANDLER: function () {
+  //       //중략
+  //       //핸들러 내에서 찜하기 함수 호출
+  //       IMP.naver_zzim({
+  //         naverProducts: {
+  //           id: product.id,
+  //           name: product.name,
+  //           desc: product.shortDescription,
+  //           uprice: product.price,
+  //           url: window.location.href,
+  //           thumb: product.image[0],
+  //           image: product.image[0],
+  //         }
+  //       })
+  //     },
+  //   })
+  // }, [])
+
   return (
     <div className="product-details-content ml-70">
       <h2>{product.name}</h2>
       <div className="product-details-price">
         {discountedPrice !== null ? (
           <Fragment>
-            <span>{currency.currencySymbol + finalDiscountedPrice}</span>{" "}
+            {/* <span>{'₩' + toCurrency(finalDiscountedPrice)}</span>{" "} */}
+            {/* <span className="old">
+              {'₩' + toCurrency(finalProductPrice)}
+            </span> */}
+            <span>{'₩' + (finalDiscountedPrice)}</span>{" "}
             <span className="old">
-              {currency.currencySymbol + finalProductPrice}
+              {'₩' + (finalProductPrice)}
             </span>
           </Fragment>
         ) : (
-          <span>{currency.currencySymbol + finalProductPrice} </span>
+          // <span>{'₩' + toCurrency(finalProductPrice)} </span>
+          <span>{'₩' + (finalProductPrice)} </span>
         )}
       </div>
       {product.rating && product.rating > 0 ? (
@@ -70,7 +191,7 @@ const ProductDescriptionInfo = ({
 
       {product.variation ? (
         <div className="pro-details-size-color">
-          <div className="pro-details-color-wrap">
+          {/* <div className="pro-details-color-wrap">
             <span>Color</span>
             <div className="pro-details-color-content">
               {product.variation.map((single, key) => {
@@ -98,7 +219,7 @@ const ProductDescriptionInfo = ({
                 );
               })}
             </div>
-          </div>
+          </div> */}
           <div className="pro-details-size">
             <span>Size</span>
             <div className="pro-details-size-content">
@@ -200,6 +321,7 @@ const ProductDescriptionInfo = ({
               <button disabled>Out of Stock</button>
             )}
           </div>
+
           <div className="pro-details-wishlist">
             <button
               className={wishlistItem !== undefined ? "active" : ""}
@@ -214,7 +336,8 @@ const ProductDescriptionInfo = ({
               <i className="pe-7s-like" />
             </button>
           </div>
-          <div className="pro-details-compare">
+
+          {/* <div className="pro-details-compare">
             <button
               className={compareItem !== undefined ? "active" : ""}
               disabled={compareItem !== undefined}
@@ -227,9 +350,10 @@ const ProductDescriptionInfo = ({
             >
               <i className="pe-7s-shuffle" />
             </button>
-          </div>
+          </div> */}
         </div>
       )}
+      {/* <button id="naverpay-btn" style={{ border: 'none', background: 'none' }} /> */}
       {product.category ? (
         <div className="pro-details-meta">
           <span>Categories :</span>
@@ -248,7 +372,7 @@ const ProductDescriptionInfo = ({
       ) : (
         ""
       )}
-      {product.tag ? (
+      {/* {product.tag ? (
         <div className="pro-details-meta">
           <span>Tags :</span>
           <ul>
@@ -265,9 +389,9 @@ const ProductDescriptionInfo = ({
         </div>
       ) : (
         ""
-      )}
+      )} */}
 
-      <div className="pro-details-social">
+      {/* <div className="pro-details-social">
         <ul>
           <li>
             <a href="//facebook.com">
@@ -295,7 +419,7 @@ const ProductDescriptionInfo = ({
             </a>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

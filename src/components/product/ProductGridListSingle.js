@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { getDiscountPrice } from "../../helpers/product";
@@ -16,34 +16,45 @@ const ProductGridListSingle = ({
   wishlistItem,
   compareItem,
   sliderClassName,
-  spaceBottomClass
+  spaceBottomClass,
+  history
 }) => {
   const [modalShow, setModalShow] = useState(false);
+  const [isMobile, setIsMobile] = useState(false)
   const { addToast } = useToasts();
 
   const discountedPrice = getDiscountPrice(product.price, product.discount);
-  const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
+  const finalProductPrice = +(product.price * currency.currencyRate);
   const finalDiscountedPrice = +(
     discountedPrice * currency.currencyRate
-  ).toFixed(2);
+  );
+
+  useEffect(() => {
+    function Mobile() { return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); }
+    console.log(Mobile())
+
+
+  }, [])
 
   return (
-    <Fragment>
+    <Fragment >
       <div
-        className={`col-xl-4 col-sm-6 ${sliderClassName ? sliderClassName : ""
+        className={`col-xl-3 col-sm-6 col-6 ${sliderClassName ? sliderClassName : ""
           }`}
       >
         <div
-          className={`product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
+          className={`product-wrap shop-product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
         >
+
           <div className="product-img">
             <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
+
               <img
                 className="default-img"
                 src={process.env.PUBLIC_URL + product.image[0]}
                 alt=""
               />
-              {product.image.length > 1 ? (
+              {product.image.length > 1 && !isMobile ? (
                 <img
                   className="hover-img"
                   src={process.env.PUBLIC_URL + product.image[1]}
@@ -143,29 +154,39 @@ const ProductGridListSingle = ({
             <div className="product-price">
               {discountedPrice !== null ? (
                 <Fragment>
-                  <span>{currency.currencySymbol + finalDiscountedPrice}</span>{" "}
+                  <span>{'₩' + finalDiscountedPrice}</span>{" "}
                   <span className="old">
-                    {currency.currencySymbol + finalProductPrice}
+                    {'₩' + finalProductPrice}
                   </span>
                 </Fragment>
               ) : (
-                <span>{currency.currencySymbol + finalProductPrice} </span>
+                <span>{'₩' + finalProductPrice} </span>
               )}
             </div>
           </div>
         </div>
-        <div className="shop-list-wrap mb-30">
+        <div className="shop-list-wrap shop-product-wrap mb-30">
           <div className="row">
             <div className="col-xl-4 col-md-5 col-sm-6">
-              <div className="product-list-image-wrap">
-                <div className="product-img">
+              <div className="product-list-image-wrap" onTouchStart={() => {
+                console.log('aa')
+                if (isMobile) {
+                  history.push(`/product/${product.id}`)
+                }
+              }}>
+                <div className="product-img" onTouchStart={() => {
+                  console.log('aa')
+                  if (isMobile) {
+                    history.push(`/product/${product.id}`)
+                  }
+                }}>
                   <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
                     <img
                       className="default-img img-fluid"
                       src={process.env.PUBLIC_URL + product.image[0]}
                       alt=""
                     />
-                    {product.image.length > 1 ? (
+                    {product.image.length > 1 && !isMobile ? (
                       <img
                         className="hover-img img-fluid"
                         src={process.env.PUBLIC_URL + product.image[1]}
@@ -201,14 +222,14 @@ const ProductGridListSingle = ({
                   {discountedPrice !== null ? (
                     <Fragment>
                       <span>
-                        {currency.currencySymbol + finalDiscountedPrice}
+                        {'₩' + finalDiscountedPrice}
                       </span>{" "}
                       <span className="old">
-                        {currency.currencySymbol + finalProductPrice}
+                        {'₩' + finalProductPrice}
                       </span>
                     </Fragment>
                   ) : (
-                    <span>{currency.currencySymbol + finalProductPrice} </span>
+                    <span>{'₩' + finalProductPrice} </span>
                   )}
                 </div>
                 {product.rating && product.rating > 0 ? (
@@ -324,7 +345,7 @@ const ProductGridListSingle = ({
         addtocompare={addToCompare}
         addtoast={addToast}
       />
-    </Fragment>
+    </Fragment >
   );
 };
 

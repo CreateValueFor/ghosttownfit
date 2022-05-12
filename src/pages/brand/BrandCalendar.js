@@ -20,10 +20,10 @@ const HomeFashion = () => {
     return (
         <Fragment>
             <MetaTags>
-                <title>Flone | Fashion Home</title>
+                <title>고스트타운 | 입고 달력</title>
                 <meta
                     name="description"
-                    content="Fashion home of flone react minimalist eCommerce template."
+                    content="고스트타운 입고 달력 페이지입니다."
                 />
             </MetaTags>
             <LayoutOne
@@ -61,7 +61,7 @@ function CalendarView() {
                 components={{
                     toolbar: Toolbar,
                 }}
-                style={{ height: "500px", maxWidth: 800, margin: '50px auto 0px' }}
+                style={{ height: "500px", maxWidth: 800, margin: '50px auto 0px', padding: 10 }}
             />
         </div>
     );

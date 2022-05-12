@@ -143,14 +143,14 @@ function ProductModal(props) {
                   {discountedprice !== null ? (
                     <Fragment>
                       <span>
-                        {currency.currencySymbol + finaldiscountedprice}
+                        {'₩' + finaldiscountedprice}
                       </span>{" "}
                       <span className="old">
-                        {currency.currencySymbol + finalproductprice}
+                        {'₩' + finalproductprice}
                       </span>
                     </Fragment>
                   ) : (
-                    <span>{currency.currencySymbol + finalproductprice} </span>
+                    <span>{'₩' + finalproductprice} </span>
                   )}
                 </div>
                 {product.rating && product.rating > 0 ? (

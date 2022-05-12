@@ -6,8 +6,12 @@ import { ToastProvider } from "react-toast-notifications";
 import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
-import { BASE_URL, getProducts } from "./api/api";
+import { BASE_URL, checkToken, getCookie, getProducts } from "./api/api";
 import { fetchProducts } from "./redux/actions/productActions";
+import "./App.css";
+import useUserAction from "./redux/actions/userActions";
+import { retryLazy } from "./lazyUtil";
+
 
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
@@ -46,36 +50,62 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
+// 개인정보 처리방침 및 이용약관
+const PrivacyPolicy = lazy(() => import("./pages/other/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/other/TermsOfService"));
+
 const App = (props) => {
+  const { logout } = useUserAction();
   useEffect(async () => {
+    const token = getCookie('gt-acst');
+    if (token) {
+      const tokenValidate = await checkToken();
+
+      if (tokenValidate.errorCode === 'T001') {
+        window.alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+        logout();
+        window.location.reload();
+
+      }
+    } else {
+      logout();
+    }
+
+
 
     const res = await getProducts();
-    console.log(res);
+    console.log(res)
+    if (!res.length) {
+      return;
+    }
+
+
     const filtedRes = res.map(item => {
       return {
         name: item.Product.title,
         price: item.Product.price,
-        category: ['sleeveless'],
+        category: [item.Product.SubCategory.name, 'fashion'],
         thumb: `${BASE_URL}public/products/${item.id}/thumb/${item.thumb}`,
         sizes: item.ProductColorSizes.map(item => item.size),
-        discount: 0,
+        discount: item.salePercent,
         fullDescription: item.detail,
         id: item.id,
         image: [`${BASE_URL}public/products/${item.id}/thumb/${item.thumb}`, ...item.ProductDisplays.map(dp => `${BASE_URL}public/products/${item.id}/displaies/${dp.image}`)],
-        new: true,
+        descriptionImg: !item.ProductImages ? [] : item.ProductImages.map(img => `${BASE_URL}public/products/${item.id}/images/${img.image}`),
+        new: item.new,
         rating: 4,
-        saleCount: 12,
+        saleCount: item.saleCount,
         shortDescription: item.Product.detail,
         sku: '12341234',
         tag: ['dd'],
         variation: [{
-          color: 'black', image: "dd", size: [
-            { name: 'x', stock: 3 }
-          ]
-        }]
+          color: item.name, image: "dd", size:
+            item.ProductColorSizes.map(size => ({ name: size.size, stock: size.count }))
+        }],
+        sizes: item.ProductColorSizes.map(size => ({ name: size.size, id: size.id }))
       }
     })
-    console.log(filtedRes)
+
     await props.dispatch(
       fetchProducts(filtedRes)
     )
@@ -89,7 +119,7 @@ const App = (props) => {
         }
       })
     );
-  });
+  }, []);
 
   return (
     <ToastProvider placement="bottom-left">
@@ -203,12 +233,21 @@ const App = (props) => {
                   path={process.env.PUBLIC_URL + "/not-found"}
                   component={NotFound}
                 />
+                <Route
+                  path={process.env.PUBLIC_URL + "/privacy-policy"}
+                  component={PrivacyPolicy}
+                />
+                <Route
+                  path={process.env.PUBLIC_URL + "/terms-of-service"}
+                  component={TermsOfService}
+                />
 
                 <Route exact component={NotFound} />
               </Switch>
             </Suspense>
           </ScrollToTop>
         </Router>
+
       </BreadcrumbsProvider>
     </ToastProvider>
   );

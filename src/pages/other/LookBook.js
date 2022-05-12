@@ -9,7 +9,7 @@ const LookBook = () => {
     return (
         <Fragment>
             <MetaTags>
-                <title>Flone | Fashion Home</title>
+                <title>고스트타운 | 룩북</title>
                 <meta
                     name="description"
                     content="Fashion home of flone react minimalist eCommerce template."

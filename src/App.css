@@ -1,0 +1,13 @@
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.col-xl-3 .product-img img {
+  /* width: 270px; */
+  /* height: 405px; */
+}
+.col-xl-4 .product-img img {
+  /* width: 370px;
+  height: 555px; */
+}

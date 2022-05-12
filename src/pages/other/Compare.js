@@ -36,7 +36,7 @@ const Compare = ({
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Compare
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne >
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="compare-main-area pt-90 pb-100">
@@ -156,26 +156,26 @@ const Compare = ({
                               );
                               const finalProductPrice = (
                                 compareItem.price * currency.currencyRate
-                              ).toFixed(2);
+                              );
                               const finalDiscountedPrice = (
                                 discountedPrice * currency.currencyRate
-                              ).toFixed(2);
+                              );
                               return (
                                 <td className="product-price" key={key}>
                                   {discountedPrice !== null ? (
                                     <Fragment>
                                       <span className="amount old">
-                                        {currency.currencySymbol +
+                                        {'₩' +
                                           finalProductPrice}
                                       </span>
                                       <span className="amount">
-                                        {currency.currencySymbol +
+                                        {'₩' +
                                           finalDiscountedPrice}
                                       </span>
                                     </Fragment>
                                   ) : (
                                     <span className="amount">
-                                      {currency.currencySymbol +
+                                      {'₩' +
                                         finalProductPrice}
                                     </span>
                                   )}

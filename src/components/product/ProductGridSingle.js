@@ -22,17 +22,16 @@ const ProductGridSingle = ({
   const { addToast } = useToasts();
 
   const discountedPrice = getDiscountPrice(product.price, product.discount);
-  const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
+  const finalProductPrice = +(product.price * currency.currencyRate);
   const finalDiscountedPrice = +(
     discountedPrice * currency.currencyRate
-  ).toFixed(2);
+  );
 
   return (
     <Fragment>
       <div
-        className={`col-xl-3 col-md-6 col-lg-4 col-sm-6 ${
-          sliderClassName ? sliderClassName : ""
-        }`}
+        className={`col-xl-3 col-md-6 col-lg-4 col-sm-6 col-xs-6 col-6  ${sliderClassName ? sliderClassName : ""
+          }`}
       >
         <div
           className={`product-wrap ${spaceBottomClass ? spaceBottomClass : ""}`}
@@ -49,6 +48,7 @@ const ProductGridSingle = ({
                   className="hover-img"
                   src={process.env.PUBLIC_URL + product.image[1]}
                   alt=""
+                  style={{ height: '100%' }}
                 />
               ) : (
                 ""
@@ -144,13 +144,13 @@ const ProductGridSingle = ({
             <div className="product-price">
               {discountedPrice !== null ? (
                 <Fragment>
-                  <span>{currency.currencySymbol + finalDiscountedPrice}</span>{" "}
+                  <span>{'₩' + finalDiscountedPrice}</span>{" "}
                   <span className="old">
-                    {currency.currencySymbol + finalProductPrice}
+                    {'₩' + finalProductPrice}
                   </span>
                 </Fragment>
               ) : (
-                <span>{currency.currencySymbol + finalProductPrice} </span>
+                <span>{'₩' + finalProductPrice} </span>
               )}
             </div>
           </div>

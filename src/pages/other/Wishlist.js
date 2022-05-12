@@ -42,7 +42,7 @@ const Wishlist = ({
         Wishlist
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible">
+      <LayoutOne >
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
@@ -71,10 +71,10 @@ const Wishlist = ({
                             );
                             const finalProductPrice = (
                               wishlistItem.price * currency.currencyRate
-                            ).toFixed(2);
+                            );
                             const finalDiscountedPrice = (
                               discountedPrice * currency.currencyRate
-                            ).toFixed(2);
+                            );
                             const cartItem = cartItems.filter(
                               item => item.id === wishlistItem.id
                             )[0];
@@ -115,17 +115,17 @@ const Wishlist = ({
                                   {discountedPrice !== null ? (
                                     <Fragment>
                                       <span className="amount old">
-                                        {currency.currencySymbol +
+                                        {'₩' +
                                           finalProductPrice}
                                       </span>
                                       <span className="amount">
-                                        {currency.currencySymbol +
+                                        {'₩' +
                                           finalDiscountedPrice}
                                       </span>
                                     </Fragment>
                                   ) : (
                                     <span className="amount">
-                                      {currency.currencySymbol +
+                                      {'₩' +
                                         finalProductPrice}
                                     </span>
                                   )}

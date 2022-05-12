@@ -13,10 +13,10 @@ const BrandNews = () => {
     return (
         <Fragment>
             <MetaTags>
-                <title>Flone | Fashion Home</title>
+                <title>고스트타운 | 브랜드 뉴스</title>
                 <meta
                     name="description"
-                    content="Fashion home of flone react minimalist eCommerce template."
+                    content="고스트타운 브랜드 뉴스 페이지 입니다."
                 />
             </MetaTags>
             <LayoutOne
@@ -33,20 +33,26 @@ const BrandNews = () => {
 export default BrandNews;
 
 const BrandStory = [
-    '1.PNG',
-    '2.목표.PNG',
-    '3. 운동의 즐거움과 (2).PNG',
-    '4.문성훈 공식후원선수.PNG',
-    '5.공식후원선수.PNG',
-    '6. 덩어리갓대 메인.PNG',
-    '7.덩어리갓대 파트너쉽.PNG',
-    '8. 마왕 메인.PNG',
-    '9.마왕파트쉽.PNG',
-    '10.임성재 원본.PNG',
-    '11.공식후원선수.PNG',
-    "12. 배철형 원본.PNG",
+    '14..PNG',
     '13.공식후원선수.PNG',
-    '14..PNG'
+    "12. 배철형 원본.PNG",
+    '11.공식후원선수.PNG',
+    '10.임성재 원본.PNG',
+    '9.마왕파트쉽.PNG',
+    '8. 마왕 메인.PNG',
+    '7.덩어리갓대 파트너쉽.PNG',
+    '6. 덩어리갓대 메인.PNG',
+    '5.공식후원선수.PNG',
+    '4.문성훈 공식후원선수.PNG',
+    '3. 운동의 즐거움과 (2).PNG',
+    '2.목표.PNG',
+    '1.PNG',
+
+
+
+
+
+
 ]
 const StyledBrandStory = styled.div`
   

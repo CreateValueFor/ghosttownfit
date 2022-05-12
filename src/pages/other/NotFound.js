@@ -12,7 +12,7 @@ const NotFound = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Not Found</title>
+        <title>GHOSTTOWN | Not Found</title>
         <meta
           name="description"
           content="404 page of flone react minimalist eCommerce template."
@@ -22,7 +22,7 @@ const NotFound = ({ location }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         404 page
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne >
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="error-area pt-40 pb-100">

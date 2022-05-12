@@ -24,7 +24,7 @@ const BlogStandard = ({ location }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Blog
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne >
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="blog-area pt-100 pb-100">

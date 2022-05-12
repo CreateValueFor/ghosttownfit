@@ -1,5 +1,7 @@
 /*---- 18. Shop page  -------*/
-
+.category-item {
+  white-space: nowrap;
+}
 .shop-top-bar {
   display: flex;
   align-items: center;
@@ -155,7 +157,7 @@
           width: 1px;
           height: 15px;
 
-          content: "";
+          content: '';
 
           background-color: #d1d1d1;
         }

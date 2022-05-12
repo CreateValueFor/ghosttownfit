@@ -18,7 +18,7 @@ const Partnership = () => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Fashion Home</title>
+        <title>고스트타운 | 파트너</title>
         <meta
           name="description"
           content="Fashion home of flone react minimalist eCommerce template."
@@ -84,8 +84,7 @@ const Partnership = () => {
                 <div className="detail-image">
                   <img
                     src={
-                      process.env.PUBLIC_URL +
-                      '/assets/img/partner/partner-1.jpeg'
+                      'https://ghosttown.s3.ap-northeast-2.amazonaws.com/partner/partner-1.jpeg'
                     }
                     alt="partner-1"
                   />
@@ -116,8 +115,7 @@ const Partnership = () => {
                 <div className="detail-image ">
                   <img
                     src={
-                      process.env.PUBLIC_URL +
-                      '/assets/img/partner/partner-2.jpeg'
+                      'https://ghosttown.s3.ap-northeast-2.amazonaws.com/partner/partner-2.jpeg'
                     }
                     alt="partner-1"
                   />
@@ -129,8 +127,8 @@ const Partnership = () => {
                 <div className="detail-image ">
                   <img
                     src={
-                      process.env.PUBLIC_URL +
-                      '/assets/img/partner/partner-3.jpeg'
+
+                      'https://ghosttown.s3.ap-northeast-2.amazonaws.com/partner/partner-3.jpeg'
                     }
                     alt="partner-1"
                   />

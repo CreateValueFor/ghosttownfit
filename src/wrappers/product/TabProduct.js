@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import SectionTitle from "../../components/section-title/SectionTitle";
@@ -11,7 +11,12 @@ const TabProduct = ({
   bgColorClass,
   category
 }) => {
+  const [theme, setTheme] = useState("")
+
+
   return (
+
+
     <div
       className={`product-area ${spaceTopClass ? spaceTopClass : ""} ${spaceBottomClass ? spaceBottomClass : ""
         } ${bgColorClass ? bgColorClass : ""}`}
@@ -39,7 +44,7 @@ const TabProduct = ({
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          <Tab.Content>
+          <Tab.Content className="tab-product-wrap">
             <Tab.Pane eventKey="newArrival">
               <div className="row">
                 <ProductGrid
@@ -51,7 +56,7 @@ const TabProduct = ({
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="bestSeller">
-              <div className="row">
+              <div className="row ">
                 <ProductGrid
                   category={category}
                   type="bestSeller"
