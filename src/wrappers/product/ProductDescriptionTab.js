@@ -33,13 +33,13 @@ const ProductDescriptionTab = ({
           <Tab.Container defaultActiveKey="productDescription">
             <Nav variant="pills" className="description-review-topbar">
               <Nav.Item>
-                <Nav.Link eventKey="additionalInfo">제품 이미지</Nav.Link>
+                <Nav.Link eventKey="additionalInfo">상품 상세</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productDescription">제품 상세</Nav.Link>
+                <Nav.Link eventKey="productDescription">Q&A</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productReviews">리뷰(2)</Nav.Link>
+                <Nav.Link eventKey="productReviews">구매평</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content className="description-review-bottom">
