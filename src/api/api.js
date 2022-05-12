@@ -40,13 +40,6 @@ export function getCookie(cName) {
 }
 
 
-<<<<<<< HEAD
-// const BASE_URL = "http://13.125.119.128:8000/"
-// const BASE_URL = "http://ghosttown.callenge.co.kr:8000/"
-export const BASE_URL = "https://ghost.callenge.co.kr/"
-// export const BASE_URL = "http://localhost:8000/"
-=======
->>>>>>> bf9b658c1285650a2184b401a35a973b6df47d7a
 
 const _baseGetRequest = async (path) => {
     if (!TOKEN) {
