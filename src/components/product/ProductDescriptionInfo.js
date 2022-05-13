@@ -36,6 +36,8 @@ const ProductDescriptionInfo = ({
   );
   const [quantityCount, setQuantityCount] = useState(1);
 
+  const isNaver = window.location.pathname.split('/')[1] === "naver"
+
   const productCartQty = getProductCartQuantity(
     cartItems,
     product,
@@ -46,7 +48,11 @@ const ProductDescriptionInfo = ({
   const { user } = useUserAction();
 
 
+
   useEffect(async () => {
+    if (!(isNaver)) {
+      return
+    }
 
     const user = (await getProfile()).data;
 
@@ -362,7 +368,7 @@ const ProductDescriptionInfo = ({
           </div> */}
         </div>
       )}
-      <button id="naverpay-btn" style={{ border: 'none', background: 'none' }} />
+      {isNaver && <button id="naverpay-btn" style={{ border: 'none', background: 'none' }} />}
       {/* {product.category ? (
         <div className="pro-details-meta">
           <span>Categories :</span>

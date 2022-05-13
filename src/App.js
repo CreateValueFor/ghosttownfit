@@ -48,6 +48,11 @@ const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
+// naver 검수용
+const NaverCart = lazy(() => import("./pages/naver/Cart"));
+const NaverCheckout = lazy(() => import("./pages/naver/Checkout"));
+const NaverProductDetail = lazy(() => import("./pages/naver/ProductDetail"));
+
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
 // 개인정보 처리방침 및 이용약관
@@ -240,6 +245,19 @@ const App = (props) => {
                 <Route
                   path={process.env.PUBLIC_URL + "/terms-of-service"}
                   component={TermsOfService}
+                />
+
+                <Route
+                  path={process.env.PUBLIC_URL + "/naver/cart"}
+                  component={NaverCart}
+                />
+                <Route
+                  path={process.env.PUBLIC_URL + "/naver/checkout"}
+                  component={NaverCheckout}
+                />
+                <Route
+                  path={process.env.PUBLIC_URL + "/naver/product/:id"}
+                  component={NaverProductDetail}
                 />
 
                 <Route exact component={NotFound} />
