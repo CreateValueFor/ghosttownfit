@@ -45,7 +45,7 @@ const MobileNavMenu = ({ strings }) => {
         </li>
         <li>
           <Link to={process.env.PUBLIC_URL + "/cscenter"}>
-            CSCENTER(Q&A)
+            CS CENTER(Q&A)
           </Link>
         </li>
       </ul>

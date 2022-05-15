@@ -11,3 +11,9 @@ input[type='number']::-webkit-inner-spin-button {
   /* width: 370px;
   height: 555px; */
 }
+
+@font-face {
+  font-family: 'HY';
+  font-weight: 500;
+  src: url('./assets/fonts/hy.ttf') format('truetype')
+}

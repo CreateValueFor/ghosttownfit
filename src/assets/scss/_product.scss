@@ -147,6 +147,23 @@ $breakpoint-xsmall : 500px;
 }
 
 .product-tab-list {
+  display: flex;
+  li{
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: "HY";
+    width:33%;
+    text-align: center;
+    @media (max-width : #{$breakpoint-tablet}) {
+      font-size: 1rem;
+    }
+    @media (max-width : #{$breakpoint-small}) {
+      font-size: .75rem;
+    }
+    
+
+  }
   justify-content: center;
   &.pt-30,
   &.pt-55 {
@@ -279,6 +296,31 @@ $breakpoint-xsmall : 500px;
   }
 }
 
+.product-tab-item--title{
+  font-size: 1.25rem;
+    font-weight: 700;
+    font-family: "HY";
+  display:flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  @media (max-width : #{$breakpoint-tablet}) {
+    font-size: 1rem;
+  }
+  
+  div{
+    width: 30px;
+    height: 1px;
+    background: #000;
+    margin: 0px 10px;
+
+  }
+}
+.product-tab-item--view-all{
+  text-align: end;
+  text-decoration: underline;
+
+}
 .tab-product-wrap{
   
     img{
