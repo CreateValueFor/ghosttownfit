@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
@@ -15,6 +15,7 @@ import {
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { startNaverOrder } from "../../api/api";
 
 const Cart = ({
     location,
@@ -29,6 +30,144 @@ const Cart = ({
     const { addToast } = useToasts();
     const { pathname } = location;
     let cartTotalPrice = 0;
+
+    useEffect(async () => {
+        const { IMP } = window
+
+        IMP.init('imp90851675')
+        const naverBtnChild = document.querySelector('.npay_button')
+        const naverBtnChildPopUp = document.querySelector('.npay_storebtn_bx')
+        if (naverBtnChild) {
+            naverBtnChild.remove()
+        }
+        if (naverBtnChildPopUp) {
+            naverBtnChildPopUp.remove()
+        }
+
+
+        window.naver.NaverPayButton.apply({
+            BUTTON_KEY: 'CF92B951-3C88-43F3-9016-93761C1EFD95',
+            TYPE: 'A',
+            COLOR: 1,
+            COUNT: 2,
+            ENABLE: 'Y',
+            EMBED_ID: 'naverpay-btn',
+            BUY_BUTTON_HANDLER: async function () {
+
+                //중략
+                // 주문 데이터 생성
+                const order = {
+
+                    receiver: 'grant naver',
+                    phone: '00000',
+                    address1: "grant naver",
+                    address2: "grant naver",
+                    postCode: "00000",
+                    productList: cartItems.map((cart) => {
+                        const selectedItem = cart.sizes.find(
+                            (elem) => elem.name === cart.selectedProductSize
+                        )
+                        return {
+                            id: selectedItem.id,
+                            count: cart.quantity,
+                            name: cart.name,
+                            thumb: cart.thumb,
+                            colorId: cart.id,
+                            price: cart.price,
+                        }
+                    }),
+                    purchaseMethod: 'naverco',
+                    purchaseAmount:
+                        cartItems.reduce((acc, cur, idx) => {
+                            return (acc += cur.price * cur.quantity)
+                        }, 0) + 3500,
+                }
+
+                const res = await startNaverOrder(order)
+
+                if (!res.success) {
+                    window.alert(
+                        '시스템 에러가 발생하였습니다. 잠시 후 다시 시도해주세요.'
+                    )
+                    return
+                }
+                const { buyer, amount, serialNumber } = res
+                const orderName =
+                    cartItems.length > 1
+                        ? `${cartItems[0].name} ${cartItems[0].quantity}개 외 ${cartItems.length - 1
+                        }건`
+                        : `${cartItems[0].name} ${cartItems[0].quantity}개`
+
+                //핸들러 내에서 결제창 호출 함수 호출
+                IMP.request_pay(
+                    {
+                        pg: 'naverco',
+                        pay_method: 'card',
+                        merchant_uid: serialNumber, //상점에서 생성한 고유 주문번호
+                        name: orderName,
+                        amount: amount,
+                        // buyer_email: buyer.email,
+                        // buyer_name: buyer.name,
+                        // buyer_tel: buyer.phone,
+                        m_redirect_url: window.location.href,
+
+                        naverProducts: cartItems.map((cart) => {
+                            const selectedItem = cart.sizes.find(
+                                (elem) => elem.name === cart.selectedProductSize
+                            )
+                            return {
+                                id: selectedItem.id,
+                                quantity: cart.quantity,
+                                name: cart.name,
+                                imageUrl: cart.thumb,
+                                infoUrl: `https://ghosttown.kr/product/${selectedItem.id}`,
+                                colorId: cart.id,
+                                basePrice: cart.price,
+                                taxType: 'TAX',
+                                shipping: {
+                                    groupId: 'shipping-a',
+                                    method: 'DELIVERY', //DELIVERY(택배·소포·등기), QUICK_SVC(퀵 서비스), DIRECT_DELIVERY(직접 전달), VISIT_RECEIPT(방문 수령), NOTHING(배송 없음)
+                                    baseFee: 3500,
+                                    feeRule: {
+                                        freeByThreshold: 20000,
+                                    },
+                                    feePayType: 'PREPAYED', //PREPAYED(선불) 또는 CASH_ON_DELIVERY(착불)
+                                },
+                            }
+                        }),
+                    },
+                    function (rsp) {
+                        if (!rsp.success) {
+                            var msg = '오류로 인해 결제가 시작되지 못하였습니다.'
+                            msg += '에러내용: ' + rsp.error_msg
+                            alert(msg)
+                        }
+                    }
+                )
+            },
+            WISHLIST_BUTTON_HANDLER: function () {
+                //중략
+                //핸들러 내에서 찜하기 함수 호출
+                IMP.naver_zzim({
+                    naverProducts: cartItems.map((cart) => {
+                        const selectedItem = cart.sizes.find(
+                            (elem) => elem.name === cart.selectedProductSize
+                        )
+                        return {
+                            id: selectedItem.id,
+
+                            name: cart.name,
+                            desc: cart.shortDescription,
+                            uprice: cart.price,
+                            url: `https://ghosttown.kr/product/${selectedItem.id}`,
+                            thumb: cart.thumb,
+                            image: cart.thumb,
+                        }
+                    }),
+                })
+            },
+        })
+    }, [])
 
     return (
         <Fragment>
@@ -323,9 +462,19 @@ const Cart = ({
                                                     {'₩' + cartTotalPrice}
                                                 </span>
                                             </h4>
-                                            <Link to={process.env.PUBLIC_URL + "/naver/checkout"}>
-                                                Proceed to Checkout
-                                            </Link>
+                                            <div className="d-flex align-items-center ">
+                                                <button
+                                                    id="naverpay-btn"
+                                                    style={{
+                                                        background: 'none',
+                                                        border: 'none',
+                                                        marginRight: 10
+                                                    }}
+                                                ></button>
+                                                <Link style={{ flex: 1 }} to={process.env.PUBLIC_URL + "/naver/checkout"}>
+                                                    Proceed to Checkout
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +499,7 @@ const Cart = ({
                     </div>
                 </div>
             </LayoutOne>
-        </Fragment>
+        </Fragment >
     );
 };
 

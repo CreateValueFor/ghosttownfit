@@ -8,7 +8,7 @@ import { addToWishlist } from "../../redux/actions/wishlistActions";
 import { addToCompare } from "../../redux/actions/compareActions";
 import Rating from "./sub-components/ProductRating";
 // import { toCurrency } from "../../api/custom";
-import { getProfile, startOrder } from "../../api/api";
+import { getProfile, startNaverOrder } from "../../api/api";
 import useUserAction from "../../redux/actions/userActions";
 
 const ProductDescriptionInfo = ({
@@ -53,11 +53,6 @@ const ProductDescriptionInfo = ({
     if (!(isNaver)) {
       return
     }
-
-    const user = (await getProfile()).data;
-
-
-
     const { IMP } = window
     IMP.init('imp90851675')
     const naverBtnChild = document.querySelector('.npay_button')
@@ -77,21 +72,16 @@ const ProductDescriptionInfo = ({
       ENABLE: 'Y',
       EMBED_ID: 'naverpay-btn',
       BUY_BUTTON_HANDLER: async function () {
-        if (!user) {
-          return window.alert("로그인이 필요합니다.")
 
-        }
         //중략
         // 주문 데이터 생성
         const order = {
 
-          receiver: user.name,
-          phone: user.phone.replaceAll("-", ""),
+          receiver: 'grant naver',
+          phone: '00000',
           address1: "grant naver",
           address2: "grant naver",
           postCode: "00000",
-
-
           productList: [{
             id: product.id,
             count: quantityCount,
@@ -105,7 +95,7 @@ const ProductDescriptionInfo = ({
             (product.price * (1 - product.discount / 100)) * quantityCount + 3500
           ,
         }
-        const res = await startOrder(order)
+        const res = await startNaverOrder(order)
 
         if (!res.success) {
           window.alert(
@@ -123,9 +113,13 @@ const ProductDescriptionInfo = ({
             pay_method: 'card',
             merchant_uid: serialNumber,
             name: orderName,
-            amount: 14000,
+            amount: amount,
+            buyer_email: buyer.email,
+            buyer_name: buyer.name,
+            buyer_tel: buyer.phone,
+            m_redirect_url: window.location.href,
 
-            naverProducts: {
+            naverProducts: [{
               id: product.id,
               quantity: quantityCount,
               name: product.name,
@@ -142,10 +136,11 @@ const ProductDescriptionInfo = ({
                 },
                 feePayType: 'PREPAYED', //PREPAYED(선불) 또는 CASH_ON_DELIVERY(착불)
               },
-            }
+            }]
           },
           function (rsp) {
             if (!rsp.success) {
+              console.log(rsp)
               var msg = '오류로 인해 결제가 시작되지 못하였습니다.'
               msg += '에러내용: ' + rsp.error_msg
               alert(msg)
@@ -169,7 +164,7 @@ const ProductDescriptionInfo = ({
         })
       },
     })
-  }, [user])
+  }, [product])
 
   return (
     <div className="product-details-content ml-70">

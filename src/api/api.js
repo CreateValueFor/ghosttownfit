@@ -208,6 +208,14 @@ export const startOrder = async (param) => {
     const res = await _basePostRequest('v1/order', param);
     return res;
 }
+/**
+ * 
+ * 주문 시작하기 - POST
+ */
+export const startNaverOrder = async (param) => {
+    const res = await _basePostRequest('v1/order/naver', param);
+    return res;
+}
 
 export const checkOrder = async (param) => {
     const res = await _basePostRequest('v1/order/check', param);
