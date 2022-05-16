@@ -9,7 +9,7 @@ import { Modal, Button } from 'react-bootstrap'
 import styled from 'styled-components'
 
 const HomeFashion = () => {
-  const [noticeOpen, setNoticeOpen] = useState(false)
+  const [noticeOpen, setNoticeOpen] = useState(true)
   return (
     <Fragment>
       <MetaTags>
