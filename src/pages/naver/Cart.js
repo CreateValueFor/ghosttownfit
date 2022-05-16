@@ -462,7 +462,7 @@ const Cart = ({
                                                     {'₩' + cartTotalPrice}
                                                 </span>
                                             </h4>
-                                            <div className="d-flex align-items-center ">
+                                            <div className="d-flex  flex-wrap justify-content-center" style={{ gap: 12 }}>
                                                 <button
                                                     id="naverpay-btn"
                                                     style={{
@@ -471,8 +471,8 @@ const Cart = ({
                                                         marginRight: 10
                                                     }}
                                                 ></button>
-                                                <Link style={{ flex: 1 }} to={process.env.PUBLIC_URL + "/naver/checkout"}>
-                                                    Proceed to Checkout
+                                                <Link style={{ flex: 1, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }} to={process.env.PUBLIC_URL + "/naver/checkout"}>
+                                                    checkout
                                                 </Link>
                                             </div>
                                         </div>

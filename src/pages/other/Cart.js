@@ -323,8 +323,8 @@ const Cart = ({
                           {'₩' + cartTotalPrice}
                         </span>
                       </h4>
-                      <Link to={process.env.PUBLIC_URL + "/checkout"}>
-                        Proceed to Checkout
+                      <Link style={{ flex: 1, borderRadius: 0 }} to={process.env.PUBLIC_URL + "/checkout"}>
+                        checkout
                       </Link>
                     </div>
                   </div>
