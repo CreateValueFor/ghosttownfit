@@ -19,9 +19,11 @@ const LookBook = () => {
                 headerContainerClass="container-fluid"
                 headerPaddingClass="header-padding-1"
             >
-                <StyledLookBook className="gt-container container">
-                    <p className="gt-title" text="" fontSize="24px" fontWeight={700}>Season 1</p>
-                    <ul>
+                <StyledLookBook className="gt-container container-fluid" >
+                    <p className="gt-title" text="" fontSize="24px" style={{ marginTop: 430, marginBottom: 13 }} fontWeight={700}>Season 1</p>
+                    <ul
+
+                    >
                         {LOOKBOOK.map((item, idx) => (
                             <img key={idx} src={`https://ghosttown.s3.ap-northeast-2.amazonaws.com/lookbook/${item}`} alt={`lookbook-${idx}`} />
                         ))}
@@ -29,17 +31,21 @@ const LookBook = () => {
                 </StyledLookBook>
 
             </LayoutOne>
-        </Fragment>
+        </Fragment >
     );
 };
 
 const StyledLookBook = styled.div`
   
   /* max-width: 800px; */
+  padding: 0 25%;
+  @media (max-width: 760px){
+      padding:0
+  }
   margin-right: auto;
   margin-left: auto;
   img{
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     object-fit: cover;
     width:100%;
   }

@@ -35,16 +35,15 @@ const TabProduct = ({
 
   return (
     <div
-      className={`product-area ${spaceTopClass ? spaceTopClass : ''} ${
-        spaceBottomClass ? spaceBottomClass : ''
-      } ${bgColorClass ? bgColorClass : ''}`}
+      className={`product-area ${spaceTopClass ? spaceTopClass : ''} ${spaceBottomClass ? spaceBottomClass : ''
+        } ${bgColorClass ? bgColorClass : ''}`}
     >
       <div className="container mt-5">
         {/* <SectionTitle titleText="메인 상품" positionClass="text-center" /> */}
         <ul className="my-5  d-flex justify-content-between product-tab-list">
           <li onClick={() => onClick('new')}>NEW RELEASES</li>
           <li onClick={() => onClick('best')}>BESTSELLER</li>
-          <li onClick={() => onClick('sale')}>OUTLET - UP TO 50% OFF</li>
+          <li onClick={() => onClick('sale')}>OUTLET - UP TO <span style={{ color: '#ff0000' }}>50% OFF</span></li>
         </ul>
         <div className="tab-product-wrap">
           <h2 className="product-tab-item--title mb-5 mt-5" ref={newRef}>

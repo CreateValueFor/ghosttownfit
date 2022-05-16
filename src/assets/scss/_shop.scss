@@ -2,6 +2,22 @@
 .category-item {
   white-space: nowrap;
 }
+.shop-category{
+  p{
+    color:#9e9e9e;
+    display: block;
+    padding: 5px 10px;
+    white-space: nowrap;
+    &:last-child{
+      margin-bottom: 15px;
+    }
+    &.selected{
+      color:#000;
+      border-bottom: 3px solid #000;
+    }
+  }
+}
+
 .shop-top-bar {
   display: flex;
   align-items: center;
@@ -59,7 +75,7 @@
         margin-left: 0;
       }
       &.active {
-        color: #fa6bff;
+        color: #ea4335;
       }
     }
   }

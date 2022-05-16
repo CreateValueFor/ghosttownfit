@@ -22,6 +22,16 @@ const ShopGridStandard = ({ location, products }) => {
     const [currentData, setCurrentData] = useState([]);
     const [sortedProducts, setSortedProducts] = useState([]);
     const [category, setCategory] = useState('all')
+    const [productCount, setProductCount] = useState({
+        'all': 0,
+        't-shirts': 0,
+        'sleeveless': 0,
+        'hoodies&sweatshirt': 0,
+        'jackets': 0,
+        'shorts': 0,
+        'pants&joggers': 0,
+        'socks': 0
+    })
 
 
     const pageLimit = 15;
@@ -41,8 +51,27 @@ const ShopGridStandard = ({ location, products }) => {
         setFilterSortValue(sortValue);
     }
 
+    const onClick = (theme) => {
+        console.log(theme);
+    }
+
 
     useEffect(() => {
+
+        setProductCount({
+            'all': products.length,
+            't-shirts': getProducts(products, 't-shirts').length,
+            'sleeveless': getProducts(products, 'sleeveless').length,
+            'hoodies&sweatshirt': getProducts(products, 'hoodies&sweatshirt').length,
+            'jackets': getProducts(products, 'jackets').length,
+            'shorts': getProducts(products, 'shorts').length,
+            'pants&joggers': getProducts(products, 'pants&joggers').length,
+            'socks': getProducts(products, 'socks').length
+
+        })
+        console.log(productCount)
+
+
         let newProduct = products;
         if (category !== 'all') {
             newProduct = getProducts(products, category)
@@ -58,7 +87,7 @@ const ShopGridStandard = ({ location, products }) => {
     }, [category, offset, products, sortType, sortValue, filterSortType, filterSortValue]);
 
     const searchByCategory = (category) => {
-        console.log(category)
+
         setCategory(category)
     }
 
@@ -82,23 +111,28 @@ const ShopGridStandard = ({ location, products }) => {
                     <div className="container">
 
                         <div className="row mb-3">
-                            <div className="col-lg-12 d-flex flex-nowrap">
+                            <ul className="my-5  d-flex justify-content-between product-tab-list " style={{ width: '100%' }}>
+                                <li onClick={() => onClick('new')}>NEW RELEASES</li>
+                                <li onClick={() => onClick('best')}>BESTSELLER</li>
+                                <li onClick={() => onClick('sale')}>OUTLET - UP TO <span style={{ color: '#ff0000' }}>50% OFF</span></li>
+                            </ul>
+                            {/* <div className="col-lg-12 d-flex flex-nowrap">
                                 <h4 className="pro-sidebar-title mr-2">신상품 </h4>
                                 <h4 className="pro-sidebar-title mr-2">베스트셀러 </h4>
                                 <h4 className="pro-sidebar-title mr-2">세일상품<span style={{ color: 'red' }}>(-50%)</span> </h4>
 
-                            </div>
+                            </div> */}
                         </div>
                         <div className="row">
-                            <div className="col-lg-12 d-flex flex-nowrap" style={{ overflowX: "scroll" }}>
-                                <p onClick={() => { searchByCategory('all') }} className="title mr-2">ALL </p>
-                                <p onClick={() => { searchByCategory('t-shirts') }} className="category-item mr-2">T-SHIRTS </p>
-                                <p onClick={() => { searchByCategory('sleeveless') }} className="category-item mr-2">SLEEVELESS </p>
-                                <p onClick={() => { searchByCategory('hoodies&sweatshirt') }} className="category-item mr-2">HOODIES & SWEATSHIRTS </p>
-                                <p onClick={() => { searchByCategory('jackets') }} className="category-item mr-2">JACKETS </p>
-                                <p onClick={() => { searchByCategory('shorts') }} className="category-item mr-2">SHORTS </p>
-                                <p onClick={() => { searchByCategory('pants&joggers') }} className="category-item mr-2">JEANS & JOGGERS </p>
-                                <p onClick={() => { searchByCategory('socks') }} className="category-item mr-2">SOCKS </p>
+                            <div className="shop-category col-lg-12 d-flex flex-nowrap" style={{ overflowX: "scroll" }}>
+                                <p onClick={() => { searchByCategory('all') }} className={['title', 'mr-2', category === 'all' && 'selected'].join(' ')}>ALL({productCount.all}) </p>
+                                <p onClick={() => { searchByCategory('t-shirts') }} className={['title', 'mr-2', category === 't-shirts' && 'selected'].join(' ')}>T-SHIRTS({productCount['t-shirts']}) </p>
+                                <p onClick={() => { searchByCategory('sleeveless') }} className={['title', 'mr-2', category === 'sleeveless' && 'selected'].join(' ')}>SLEEVELESS({productCount['sleeveless']}) </p>
+                                <p onClick={() => { searchByCategory('hoodies&sweatshirt') }} className={['title', 'mr-2', category === 'hoodies&sweatshirt' && 'selected'].join(' ')}>HOODIES & SWEATSHIRTS({productCount['hoodies&sweatshirt']}) </p>
+                                <p onClick={() => { searchByCategory('jackets') }} className={['title', 'mr-2', category === 'jackets' && 'selected'].join(' ')}>JACKETS({productCount['jackets']}) </p>
+                                <p onClick={() => { searchByCategory('shorts') }} className={['title', 'mr-2', category === 'shorts' && 'selected'].join(' ')}>SHORTS({productCount['shorts']}) </p>
+                                <p onClick={() => { searchByCategory('pants&joggers') }} className={['title', 'mr-2', category === 'pants&joggers' && 'selected'].join(' ')}>JEANS & JOGGERS({productCount['pants&joggers']}) </p>
+                                <p onClick={() => { searchByCategory('socks') }} className={['title', 'mr-2', category === 'socks' && 'selected'].join(' ')}>SOCKS({productCount['socks']})</p>
                             </div>
                         </div>
                         <div className="row">
